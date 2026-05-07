@@ -3,3 +3,22 @@ node_modules/
 *.log
 .env
 .env.*
+
+# Zine & course hand-ins (keep local only)
+זין/
+zine.ai
+
+# Motion / design binaries
+*.aep
+Adobe After Effects Auto-Save/
+
+# Documents (not needed for the HTML player)
+*.pdf
+*.docx
+
+# Long-form source interview — player uses try1mp3.mp3
+סליחה על השאלה ילדים 4  ילדים מגמגמים.mp3
+
+# Scratch / IDE
+cursor-handoff-prompt.md
+workspace.code-workspace
