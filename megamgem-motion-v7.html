@@ -44,7 +44,8 @@
   }
   .strip {
     display: flex; align-items: center; gap: 28px;
-    direction: rtl;
+    flex-direction: row;
+    direction: ltr;
     white-space: nowrap; will-change: transform;
     transition: transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
     font-family: var(--hebrew);
@@ -55,6 +56,8 @@
   }
   .film-word {
     flex-shrink: 0;
+    direction: rtl;
+    unicode-bidi: isolate;
     color: var(--paper-dim);
     opacity: 0.35;
     transition: color 0.28s, opacity 0.28s, transform 0.28s, font-weight 0.28s;
@@ -78,12 +81,13 @@
     content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
     width: 6px; height: 6px; border-radius: 50%; background: var(--rust); opacity: 0.45;
   }
-  /* Audition "silence" cues — spacer only, no glyphs */
+  /* Audition "silence" — own timeline slot (no letters); same weight as a word beat */
   .film-gap {
     display: inline-block; flex-shrink: 0; height: 6px; align-self: center;
     border-radius: 3px; background: var(--paper-faint); opacity: 0.42;
     transition: opacity 0.25s, background 0.25s, box-shadow 0.25s;
   }
+  .film-gap[role='img'] { cursor: default; }
   .film-gap.active {
     opacity: 0.95;
     background: rgba(193, 63, 31, 0.28);
@@ -190,7 +194,7 @@
   <div class="stage" id="stage">
     <div class="center-line" aria-hidden="true"></div>
     <div class="strip-wrap">
-      <div class="strip" id="filmStrip" dir="rtl"></div>
+      <div class="strip" id="filmStrip" dir="ltr"></div>
     </div>
     <div class="stutter-tag" id="stutterTag"></div>
   </div>
@@ -4671,13 +4675,23 @@ function rebuildCueChain() {
     });
   }
   list.sort((a, b) => (a.t - b.t) || (a.ui - b.ui) || (a.ej - b.ej));
-  cueSortedStarts = list.map(x => x.t);
+  const boundaries = new Set(list.map((x) => x.t));
+  for (const s of csvSilenceGaps || []) {
+    if (s.startMs != null && !Number.isNaN(s.startMs)) boundaries.add(s.startMs);
+  }
+  const sortedBounds = [...boundaries].sort((a, b) => a - b);
+  cueSortedStarts = sortedBounds;
   const audioEnd = audio.duration && isFinite(audio.duration) ? audio.duration * 1000 : null;
-  const fallbackEnd = list.length ? list[list.length - 1].t + 800 : 0;
+  const fallbackEnd = sortedBounds.length ? sortedBounds[sortedBounds.length - 1] + 800 : 0;
   const chainEnd = audioEnd != null && audioEnd > 0 ? audioEnd : fallbackEnd;
+  function nextBoundaryAfter(t0) {
+    for (let k = 0; k < sortedBounds.length; k++) {
+      if (sortedBounds[k] > t0) return sortedBounds[k];
+    }
+    return chainEnd;
+  }
   for (let i = 0; i < list.length; i++) {
-    const next = list[i + 1];
-    const boundary = next ? next.t : chainEnd;
+    const boundary = nextBoundaryAfter(list[i].t);
     cueChainNextAbs.set(`${list[i].ui},${list[i].ej}`, boundary);
   }
 }
@@ -4783,7 +4797,8 @@ function rebuildFilmStrip() {
           const dur = Math.max(0, S.endMs - S.startMs);
           const gap = document.createElement('span');
           gap.className = 'film-gap';
-          gap.setAttribute('role', 'presentation');
+          gap.setAttribute('role', 'img');
+          gap.setAttribute('aria-label', 'שקט');
           const wPx = Math.min(520, Math.max(36, dur * 0.034));
           gap.style.width = wPx + 'px';
           let insertRef = cur.el;
@@ -5023,8 +5038,6 @@ function renderAtTime(t) {
   }
 
   filmWordsMeta.forEach((meta) => {
-    const utStartAbs = meta.utStartAbs;
-    const anchorMs = utStartAbs != null ? utStartAbs : meta.utBase;
     meta.letters.forEach(({ el, s, absAppearAt }) => {
       if (t >= absAppearAt) {
         if (!el.classList.contains('visible')) el.classList.add('visible');
@@ -5033,17 +5046,16 @@ function renderAtTime(t) {
           else el.classList.remove('erasing');
         }
         if (s.animatesProl) {
-          const sinceAppear = t - absAppearAt;
-          let rampDur;
+          let absProlEnd = meta.absEnd;
           if (s.isBridgeProlong && s.holdUntilMsAbs != null) {
-            rampDur = Math.max(100, s.holdUntilMsAbs - anchorMs - s.appearAt);
-          } else {
-            rampDur = (s.prolongIntensity || 0) * TIMING.prolongHoldPerDash;
+            absProlEnd = s.holdUntilMsAbs;
           }
+          const rampDur = Math.max(40, absProlEnd - absAppearAt);
+          const sinceAppear = t - absAppearAt;
           let prol = 0;
-          if (sinceAppear < 50) prol = 0;
-          else if (sinceAppear >= 50 + rampDur) prol = 1000;
-          else prol = ((sinceAppear - 50) / rampDur) * 1000;
+          if (sinceAppear <= 0) prol = 0;
+          else if (sinceAppear >= rampDur) prol = 1000;
+          else prol = (sinceAppear / rampDur) * 1000;
           el.style.fontVariationSettings = `"PROL" ${Math.round(prol)}, "STTR" 0`;
         } else {
           el.style.fontVariationSettings = `"PROL" ${s.prol}, "STTR" ${s.sttr}`;
