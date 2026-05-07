@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מגמגם — Film Strip</title>
+<link rel="stylesheet" href="megamgem-font.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#000;--text:#fff;--dim:#333;--mid:#555;--accent:#e84040}
+body{background:var(--bg);color:var(--text);font-family:'MegamgemSans','Frank Ruhl Libre',serif;overflow:hidden;height:100vh;width:100vw;cursor:none}
+body.paused{cursor:default}
+
+/* Film strip container */
+.strip-wrap{position:absolute;top:50%;left:0;right:0;transform:translateY(-50%);height:120px;overflow:visible}
+.strip{position:absolute;top:0;display:flex;align-items:center;gap:28px;transition:transform .35s cubic-bezier(.25,.1,.25,1);white-space:nowrap;will-change:transform}
+
+/* Words */
+.w{font-size:52px;font-weight:300;color:var(--dim);opacity:.35;transition:color .3s,opacity .3s,transform .3s,filter .3s,font-weight .3s;flex-shrink:0;position:relative;line-height:1.3}
+.w.active{color:var(--text);opacity:1;font-weight:800;font-size:58px;transform:scale(1.05)}
+.w.near1{color:var(--mid);opacity:.55}
+.w.near2{color:#2a2a2a;opacity:.4}
+.w.far{opacity:.15}
+
+/* Utterance break */
+.utt-break{width:80px;flex-shrink:0;height:4px;position:relative}
+.utt-break::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.5}
+
+/* Stutter effect: go back to the letter */
+.w span { transition: opacity 0.15s; }
+.w.stuttering span:nth-child(n + calc(var(--stutter-pos) + 2)) {
+  opacity: 0;
+}
+@keyframes stutter-try {
+  0%, 100% { transform: translateX(0); opacity: 1; }
+  50% { transform: translateX(-4px); opacity: 0.5; } /* Slight push back to simulate retry */
+}
+.w.stuttering span:nth-child(calc(var(--stutter-pos) + 1)) {
+  display: inline-block;
+  animation: stutter-try 0.25s ease-out infinite;
+}
+
+/* Ghost strike and dissolve */
+.ghost-word{position:relative}
+.ghost-word::after{content:'';position:absolute;left:-5%;right:-5%;top:50%;height:3px;background:var(--accent);transform-origin:right;transform:scaleX(0);transition:transform .2s cubic-bezier(0,0,.2,1);z-index:2}
+.w.ghost-dissolve::after{transform:scaleX(1)}
+@keyframes dissolve{
+  0%{opacity:1;filter:blur(0)}
+  60%{opacity:.6;filter:blur(1px)}
+  100%{opacity:0;filter:blur(6px)}
+}
+.w.ghost-dissolve{animation:dissolve .7s ease-out forwards .15s} /* Dissolve starts slightly after strike finishes */
+
+/* Prolong PROL axis */
+.prolonged-letter{transition:font-variation-settings .3s cubic-bezier(0,0,.2,1)}
+.w.active.prolonging .prolonged-letter{font-variation-settings:"PROL" 1000}
+
+/* Center guide line */
+.center-line{position:fixed;top:0;bottom:0;left:50%;width:1px;background:linear-gradient(to bottom,transparent 30%,rgba(232,64,64,.2) 50%,transparent 70%);pointer-events:none;z-index:10}
+
+/* Controls */
+.controls{position:fixed;bottom:0;left:0;right:0;padding:16px 32px;display:flex;align-items:center;gap:20px;background:linear-gradient(transparent,rgba(0,0,0,.9));z-index:20;opacity:0;transition:opacity .3s}
+body.paused .controls{opacity:1}
+.controls:hover{opacity:1}
+.tc{font-family:'SF Mono',monospace;font-size:13px;color:#666;letter-spacing:.05em}
+.tc b{color:var(--accent)}
+.progress-bar{flex:1;height:3px;background:#1a1a1a;border-radius:2px;cursor:pointer;position:relative}
+.progress-fill{height:100%;background:var(--accent);border-radius:2px;width:0%;transition:width .1s}
+.ctrl-btn{background:transparent;border:1px solid #333;color:#888;font-size:11px;padding:5px 14px;border-radius:4px;cursor:pointer;font-family:inherit;letter-spacing:.05em}
+.ctrl-btn:hover{border-color:var(--accent);color:var(--text)}
+.ctrl-btn.active{border-color:var(--accent);color:var(--accent)}
+
+/* Audio drop zone */
+.audio-zone{position:fixed;top:16px;right:16px;padding:8px 16px;background:rgba(30,30,30,.8);border:1px dashed #333;border-radius:8px;font-size:11px;color:#555;cursor:pointer;z-index:20;transition:all .2s}
+.audio-zone:hover{border-color:var(--accent);color:#888}
+.audio-zone.loaded{border-color:#2a5a2a;color:#4a8a4a;border-style:solid}
+
+/* Counter */
+.utt-counter{position:fixed;top:16px;left:16px;font-size:11px;color:#333;z-index:20;font-family:'SF Mono',monospace;letter-spacing:.1em;direction:ltr;unicode-bidi:bidi-override}
+</style>
+</head>
+<body class="paused">
+
+<div class="center-line"></div>
+<div class="strip-wrap">
+  <div class="strip" id="strip"></div>
+</div>
+
+<div class="utt-counter" id="counter">00 / 00</div>
+
+<div class="audio-zone" id="audioZone">
+  Drop MP3 or click
+  <input type="file" id="audioInput" accept="audio/*" style="display:none">
+</div>
+
+<div class="controls">
+  <button class="ctrl-btn" id="playBtn">▶ Play</button>
+  <div class="tc" id="timecode"><b>00:00</b> / 00:00</div>
+  <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+  <button class="ctrl-btn" id="rewindBtn">⏪ Start</button>
+</div>
+
+<audio id="audio" preload="auto"></audio>
+<script src="film-data.js"></script>
+<script>
+/* ── Build flat word list from structured events ── */
+const allWords = [];
+FILM_DATA.forEach((utt, ui) => {
+  if (!utt.events) return;
+  utt.events.forEach((ev, ei) => {
+    let type = 'normal';
+    if (ev.kind === 'ghost') type = 'ghost';
+    else if (ev.stutters && ev.stutters.length > 0) {
+      if (ev.stutters[0].type === 'prolong' || ev.stutters[0].type === 'mixed') type = 'prolong';
+      else type = 'stutter';
+    }
+    allWords.push({
+      text: ev.target || ev.text || "",
+      type: type,
+      stutters: ev.stutters || [],
+      uttIdx: ui,
+      eventIdx: ei,
+      uttMs: utt.ms
+    });
+  });
+  // Add utterance break marker
+  allWords.push({ text: '', type: 'break', uttIdx: ui });
+});
+
+/* ── Compute word-level timing ── */
+function computeWordTimes() {
+  const times = [];
+  for (let i = 0; i < allWords.length; i++) {
+    const w = allWords[i];
+    if (w.type === 'break') {
+      // Break: starts at end of previous word, duration = gap to next utt
+      const nextUtt = FILM_DATA[w.uttIdx + 1];
+      const endOfPrev = times.length > 0 ? times[times.length - 1].end : 0;
+      const nextStart = nextUtt ? nextUtt.ms : endOfPrev + 500;
+      const gap = Math.max(200, nextStart - endOfPrev);
+      times.push({ start: endOfPrev, end: endOfPrev + gap, dur: gap });
+      continue;
+    }
+
+    // Find the current utterance's time window
+    const uttStart = w.uttMs || 0;
+    const nextUttIdx = w.uttIdx + 1;
+    const nextUttStart = nextUttIdx < FILM_DATA.length ? FILM_DATA[nextUttIdx].ms : uttStart + 10000;
+    const uttDuration = nextUttStart - uttStart;
+
+    // Distribute time among words in this utterance
+    // Stutter words get 1.5x time, prolong words get 1.8x
+    const wordsInUtt = allWords.filter(ww => ww.uttIdx === w.uttIdx && ww.type !== 'break');
+    let totalWeight = 0;
+    const weights = wordsInUtt.map(ww => {
+      let weight = 1;
+      if (ww.type === 'stutter') weight = 1.6;
+      else if (ww.type === 'prolong') weight = 1.8;
+      else if (ww.type === 'ghost') weight = 0.8;
+      totalWeight += weight;
+      return weight;
+    });
+
+    // Find this word's position in its utterance
+    let myWeightIdx = 0;
+    let cumWeight = 0;
+    for (const ww of wordsInUtt) {
+      if (ww === w) break;
+      cumWeight += weights[myWeightIdx];
+      myWeightIdx++;
+    }
+
+    const allocatedUttTime = uttDuration * 0.85; // 85% for words, 15% gap
+    const wordStart = uttStart + (cumWeight / totalWeight) * allocatedUttTime;
+    const wordDur = (weights[myWeightIdx] / totalWeight) * allocatedUttTime;
+
+    times.push({ start: wordStart, end: wordStart + wordDur, dur: wordDur });
+  }
+  return times;
+}
+
+const wordTimes = computeWordTimes();
+
+/* ── Build DOM ── */
+const strip = document.getElementById('strip');
+const wordEls = [];
+
+allWords.forEach((w, i) => {
+  if (w.type === 'break') {
+    const el = document.createElement('div');
+    el.className = 'utt-break';
+    strip.appendChild(el);
+    wordEls.push(el);
+    return;
+  }
+  
+  const el = document.createElement('span');
+  el.className = 'w';
+  el.dataset.type = w.type;
+  
+  if (w.type === 'ghost') el.classList.add('ghost-word');
+
+  // Wrap all characters in spans so we can manipulate individual letters
+  // for stutters and prolongations
+  let targetPos = -1;
+  if (w.stutters && w.stutters.length > 0) {
+    targetPos = w.stutters[0].position;
+  }
+  
+  Array.from(w.text).forEach((char, idx) => {
+    const span = document.createElement('span');
+    span.textContent = char;
+    if (w.type === 'prolong' && idx === targetPos) {
+      span.classList.add('prolonged-letter');
+    }
+    el.appendChild(span);
+  });
+
+  strip.appendChild(el);
+  wordEls.push(el);
+});
+
+/* ── Position strip so first word is centered ── */
+function centerOnWord(idx) {
+  const el = wordEls[idx];
+  if (!el) return;
+  const stripRect = strip.getBoundingClientRect();
+  const elRect = el.getBoundingClientRect();
+  const viewCenter = window.innerWidth / 2;
+  const elCenter = elRect.left + elRect.width / 2;
+  const currentTransform = parseFloat(strip.style.transform.replace(/[^-\d.]/g, '')) || 0;
+  // In RTL, we need to shift differently
+  const offset = viewCenter - elCenter;
+  strip.style.transform = `translateX(${currentTransform + offset}px)`;
+}
+
+/* ── Highlight logic ── */
+let currentWordIdx = -1;
+let stutterTimeout = null;
+let ghostTimeout = null;
+
+function highlightWord(idx) {
+  if (idx === currentWordIdx) return;
+  currentWordIdx = idx;
+
+  wordEls.forEach((el, i) => {
+    el.classList.remove('active', 'near1', 'near2', 'far', 'stuttering', 'prolonging');
+    if (allWords[i].type === 'break') return;
+    const dist = Math.abs(i - idx);
+    if (i === idx) el.classList.add('active');
+    else if (dist <= 2) el.classList.add('near1');
+    else if (dist <= 5) el.classList.add('near2');
+    else el.classList.add('far');
+  });
+
+  const w = allWords[idx];
+  const el = wordEls[idx];
+
+  // Stutter: hide letters after stutter position, animate the stuttering letter
+  if (w.type === 'stutter' && w.stutters && w.stutters.length > 0) {
+    const intensity = w.stutters[0].intensity || 1;
+    const pos = w.stutters[0].position || 0;
+    el.style.setProperty('--stutter-pos', pos);
+    
+    el.classList.add('stuttering');
+    const dur = wordTimes[idx].dur * (0.5 + intensity * 0.1); 
+    clearTimeout(stutterTimeout);
+    stutterTimeout = setTimeout(() => el.classList.remove('stuttering'), dur);
+  }
+
+  // Prolong: PROL axis on specific letter, delayed to happen mid-letter
+  if (w.type === 'prolong' && w.stutters && w.stutters.length > 0) {
+    const pos = w.stutters[0].position || 0;
+    const charCount = Math.max(1, w.text.length);
+    // Delay based on where the letter is in the word, plus a small baseline to trigger mid-letter
+    const delay = (pos / charCount) * wordTimes[idx].dur + (wordTimes[idx].dur / charCount) * 0.3;
+    
+    setTimeout(() => {
+      if (currentWordIdx === idx) { // ensure we are still on this word
+        el.classList.add('prolonging');
+      }
+    }, delay);
+  } else if (w.type === 'prolong') {
+    el.classList.add('prolonging');
+  }
+
+  // Ghost: appear then strike+dissolve
+  if (w.type === 'ghost') {
+    el.style.opacity = '1';
+    el.style.color = 'var(--text)';
+    clearTimeout(ghostTimeout);
+    ghostTimeout = setTimeout(() => {
+      el.classList.add('ghost-dissolve');
+    }, wordTimes[idx].dur * 0.3);
+  }
+
+  centerOnWord(idx);
+
+  // Update counter
+  const uttNum = w.uttIdx !== undefined ? w.uttIdx + 1 : 0;
+  document.getElementById('counter').textContent =
+    String(uttNum).padStart(2, '0') + ' / ' + FILM_DATA.length;
+}
+
+/* ── Audio ── */
+const audio = document.getElementById('audio');
+let audioLoaded = false;
+let playing = false;
+let timerBase = 0;
+let pauseAccum = 0;
+
+function getCurrentMs() {
+  if (audioLoaded) return audio.currentTime * 1000;
+  return performance.now() - timerBase;
+}
+
+function findWordAtTime(ms) {
+  // Binary-ish search: find the last word whose start <= ms
+  for (let i = wordTimes.length - 1; i >= 0; i--) {
+    if (ms >= wordTimes[i].start) return i;
+  }
+  return 0;
+}
+
+// When audio loads, update totalMs to match audio duration
+function updateTotalMs() {
+  if (audioLoaded && audio.duration && isFinite(audio.duration)) {
+    totalMs = audio.duration * 1000;
+  }
+}
+
+/* ── Playback ── */
+const playBtn = document.getElementById('playBtn');
+const progressFill = document.getElementById('progressFill');
+const timecodeEl = document.getElementById('timecode');
+
+function fmtTime(ms) {
+  const s = Math.max(0, Math.floor(ms / 1000));
+  return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+}
+
+let totalMs = wordTimes.length > 0 ? wordTimes[wordTimes.length - 1].end : 0;
+
+function tick() {
+  if (!playing) return;
+  const ms = getCurrentMs();
+  if (ms >= totalMs) { pause(); return; }
+
+  const idx = findWordAtTime(ms);
+  highlightWord(idx);
+
+  const pct = (ms / totalMs) * 100;
+  progressFill.style.width = pct + '%';
+  timecodeEl.innerHTML = `<b>${fmtTime(ms)}</b> / ${fmtTime(totalMs)}`;
+
+  requestAnimationFrame(tick);
+}
+
+function play() {
+  playing = true;
+  document.body.classList.remove('paused');
+  playBtn.textContent = '❚❚ Pause';
+  if (audioLoaded) { audio.play().catch(() => {}); }
+  else { timerBase = performance.now() - pauseAccum; }
+  tick();
+}
+
+function pause() {
+  playing = false;
+  document.body.classList.add('paused');
+  playBtn.textContent = '▶ Play';
+  if (audioLoaded) audio.pause();
+  else pauseAccum = performance.now() - timerBase;
+}
+
+function seekTo(ms) {
+  if (audioLoaded) audio.currentTime = ms / 1000;
+  else { timerBase = performance.now() - ms; pauseAccum = ms; }
+  const idx = findWordAtTime(ms);
+  highlightWord(idx);
+  progressFill.style.width = (ms / totalMs) * 100 + '%';
+  timecodeEl.innerHTML = `<b>${fmtTime(ms)}</b> / ${fmtTime(totalMs)}`;
+}
+
+/* ── Events ── */
+playBtn.addEventListener('click', () => playing ? pause() : play());
+document.getElementById('rewindBtn').addEventListener('click', () => { seekTo(0); });
+
+document.addEventListener('keydown', e => {
+  if (e.code === 'Space') { e.preventDefault(); playing ? pause() : play(); }
+  else if (e.code === 'ArrowLeft') { e.preventDefault(); seekTo(getCurrentMs() + 3000); }
+  else if (e.code === 'ArrowRight') { e.preventDefault(); seekTo(Math.max(0, getCurrentMs() - 3000)); }
+});
+
+document.getElementById('progressBar').addEventListener('click', e => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  seekTo(pct * totalMs);
+});
+
+/* ── Audio loading ── */
+const audioZone = document.getElementById('audioZone');
+audioZone.addEventListener('click', () => document.getElementById('audioInput').click());
+audioZone.addEventListener('dragover', e => { e.preventDefault(); audioZone.style.borderColor = 'var(--accent)'; });
+audioZone.addEventListener('dragleave', () => { audioZone.style.borderColor = ''; });
+audioZone.addEventListener('drop', e => {
+  e.preventDefault(); audioZone.style.borderColor = '';
+  if (e.dataTransfer.files[0]) loadAudio(e.dataTransfer.files[0]);
+});
+document.getElementById('audioInput').addEventListener('change', e => {
+  if (e.target.files[0]) loadAudio(e.target.files[0]);
+});
+
+function loadAudio(file) {
+  const url = URL.createObjectURL(file);
+  audio.src = url;
+  audio.addEventListener('canplaythrough', () => {
+    audioLoaded = true;
+    updateTotalMs();
+    audioZone.textContent = '🔊 ' + file.name;
+    audioZone.classList.add('loaded');
+    timecodeEl.innerHTML = `<b>00:00</b> / ${fmtTime(totalMs)}`;
+  }, { once: true });
+}
+
+/* ── Init ── */
+// Center on first word
+strip.style.transition = 'none';
+requestAnimationFrame(() => {
+  highlightWord(0);
+  strip.style.transition = '';
+  timecodeEl.innerHTML = `<b>00:00</b> / ${fmtTime(totalMs)}`;
+});
+</script>
+</body>
+</html>

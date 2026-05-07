@@ -1,0 +1,3727 @@
+[
+  {
+    "utterance_id": 0,
+    "raw": "ל-למה אתה מגמגם? זה בגנים אצלנו. אבא שלי, ה---האחים שלו וסבא שלי, אז אני גם.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "למה",
+        "startMs": 241,
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ל",
+            "intensity": 1,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "אתה",
+        "startMs": 716,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מגמגם?",
+        "startMs": 1004,
+        "stutters": []
+      },
+      {
+        "kind": "filler",
+        "target": "אה",
+        "startMs": 3823,
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ה",
+            "intensity": 3,
+            "position": 1
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "זה",
+        "startMs": 6930,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בגנים",
+        "startMs": 7120,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אצלנו",
+        "startMs": 7763,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אבא",
+        "startMs": 9165,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שלי",
+        "startMs": 9461,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "האחים",
+        "startMs": 11427,
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ה",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "שלו",
+        "startMs": 12170,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "וסבא",
+        "startMs": 14103,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שלי",
+        "startMs": 14602,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אז אה",
+        "startMs": 14981,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "startMs": 16229,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "גם",
+        "startMs": 16511,
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 1,
+    "raw": "פשוט ככה זה בא לי.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "פשוט",
+        "startMs": 17184,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ככה",
+        "startMs": 18099,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "זה",
+        "startMs": 18339,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בא לי",
+        "startMs": 18408,
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 2,
+    "raw": "אז מאז שאני זוווכר את עצמי אז אני מג---גמגם.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "אז",
+        "startMs": 18973,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מאז",
+        "startMs": 19349,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שאני",
+        "startMs": 19571,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "זוכר",
+        "startMs": 20376,
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "ו",
+            "intensity": 3,
+            "position": 1
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "את",
+        "startMs": 21102,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "עצמי",
+        "startMs": 21275,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אז",
+        "startMs": 21580,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "startMs": 21769,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מגמגם",
+        "startMs": 22019,
+        "stutters": [
+          {
+            "type": "prolong-bridge",
+            "letter": "ג",
+            "intensity": 3,
+            "position": 1,
+            "holdUntilMs": 22592
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "utterance_id": 3,
+    "raw": "אני מגמגם מגיל שלוש. מה שכ----כן אני יייודע שמא----אז ומע--עולם אני שא-אלתי את עצמי ללללמה ד-דווקא אאאאאאאני.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "אני",
+        "startMs": 23343,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מגמגם",
+        "startMs": 24040,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מגיל",
+        "startMs": 24681,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שלוש",
+        "startMs": 25463,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מה",
+        "startMs": 25913,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שכן",
+        "startMs": 26225,
+        "stutters": [
+          {
+            "type": "prolong-bridge",
+            "letter": "כ",
+            "intensity": 3,
+            "position": 1,
+            "holdUntilMs": 27190
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "startMs": 27313,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "יודע",
+        "startMs": 28080,
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "י",
+            "intensity": 4,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "שמאז",
+        "startMs": 28559,
+        "stutters": [
+          {
+            "type": "prolong-bridge",
+            "letter": "א",
+            "intensity": 3,
+            "position": 2,
+            "holdUntilMs": 30056
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "ומעולם",
+        "startMs": 30268,
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ע",
+            "intensity": 3,
+            "position": 2
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "startMs": 31209,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שאלתי",
+        "startMs": 31449,
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "א",
+            "intensity": 1,
+            "position": 1
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "את",
+        "startMs": 32163,
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "א",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "עצמי",
+        "startMs": 32836,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "למה",
+        "startMs": 33559,
+        "stutters": [
+          {
+            "type": "prolong-bridge",
+            "letter": "ל",
+            "intensity": 3,
+            "position": 0,
+            "holdUntilMs": 34309
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "דווקא",
+        "startMs": 35032,
+        "stutters": []
+      },
+      {
+        "kind": "rewind",
+        "target": "אני",
+        "startMs": 35681,
+        "attempts": [
+          "א",
+          "א",
+          "א",
+          "אני"
+        ],
+        "attemptStarts": [
+          35681,
+          35861,
+          36602,
+          37222
+        ],
+        "finalStutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 4,
+    "raw": "יש תתתיאוריות של שילוב של חרדה חחחחברתית ובעיות נשימה אבל אני לא באמת יודע אני מגמגם כי ככה.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "יש",
+        "startMs": 38398,
+        "stutters": []
+      },
+      {
+        "kind": "filler",
+        "target": "תאוריות",
+        "startMs": 38872,
+        "attempts": [
+          "ת",
+          "ת",
+          "ת--תאוריות"
+        ],
+        "attemptStarts": [
+          38872,
+          39298,
+          39611
+        ],
+        "finalStutters": [
+          {
+            "type": "prolong",
+            "letter": "ת",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "של",
+        "startMs": 40298,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שילוב",
+        "startMs": 41051,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "של",
+        "startMs": 41766,
+        "stutters": []
+      },
+      {
+        "kind": "filler",
+        "target": "אמ",
+        "startMs": 42152,
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "א",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "חרדה",
+        "startMs": 43197,
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ח",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "rewind",
+        "target": "חברתית",
+        "startMs": 43680,
+        "attempts": [
+          "ח",
+          "ח",
+          "ח",
+          "ח",
+          "ח",
+          "חברתית"
+        ],
+        "attemptStarts": [
+          43680,
+          43786,
+          43895,
+          44037,
+          44173,
+          44366
+        ],
+        "finalStutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ובעיות",
+        "startMs": 45001,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "נשימה",
+        "startMs": 45688,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אבל",
+        "startMs": 47099,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "startMs": 47733,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "startMs": 48002,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "באמת",
+        "startMs": 48134,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "יודע",
+        "startMs": 48369,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "startMs": 48750,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מגמגם",
+        "startMs": 48910,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כי",
+        "startMs": 49574,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ככה",
+        "startMs": 50246,
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 5,
+    "raw": "עד כיתה גגגגגימל בעצם דיברתי רגיל כמו כל בן אדם כשהייתי בכיתה ג' עברתי (כל) כל השנה חרם ואז בעצם (בס) בסוף השנה התחלתי לגמגם.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "עד",
+        "startMs": 50809,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כיתה",
+        "startMs": 51004,
+        "stutters": []
+      },
+      {
+        "kind": "rewind",
+        "target": "גימל",
+        "startMs": 51610,
+        "attempts": [
+          "גימ",
+          "ג--גי",
+          "גימל"
+        ],
+        "attemptStarts": [
+          51610,
+          52062,
+          52572
+        ],
+        "finalStutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בעצם",
+        "startMs": 52921,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "דיברתי",
+        "startMs": 53342,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "רגיל",
+        "startMs": 54117,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כמו",
+        "startMs": 54624,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כל",
+        "startMs": 55016,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בנאדם",
+        "startMs": 55242,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כשהייתי",
+        "startMs": 55878,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בכיתה",
+        "startMs": 56283,
+        "stutters": []
+      },
+      {
+        "kind": "filler",
+        "target": "גימל",
+        "startMs": 56797,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "עברתי",
+        "startMs": 57536,
+        "stutters": []
+      },
+      {
+        "kind": "ghost",
+        "text": "כל",
+        "startMs": 57935
+      },
+      {
+        "kind": "word",
+        "target": "השנה",
+        "startMs": 58905,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "חרם",
+        "startMs": 59142,
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ח",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "ואז",
+        "startMs": 60161,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בעצם",
+        "startMs": 60427,
+        "stutters": []
+      },
+      {
+        "kind": "ghost",
+        "text": "בס",
+        "startMs": 60830
+      },
+      {
+        "kind": "word",
+        "target": "השנה",
+        "startMs": 62237,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "התחלתי",
+        "startMs": 62583,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לגמגם",
+        "startMs": 63185,
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 6,
+    "raw": "הייתה לי תקופה פ---פחות קלה המצב החברתי שלי לא היה הכי טוב.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "הייתה לי",
+        "startMs": 63881,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "תקופה",
+        "startMs": 64175,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "פחות",
+        "startMs": 64992,
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "פ",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "קלה",
+        "startMs": 66268,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "המצב",
+        "startMs": 67016,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "החברתי",
+        "startMs": 67412,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שלי",
+        "startMs": 67941,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לא היה",
+        "startMs": 68624,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "הכי טוב",
+        "startMs": 68892,
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 7,
+    "raw": "לא שיתפו אותי, לא בחרו בי לשחק, נש נשארתי לבד, בהפסקות בכלל לא היה לי מ-מי להיות, הייתי בכלל עם השומר כאילו הוא היה ממש נחמד.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "לא",
+        "startMs": 69941,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שיתפו",
+        "startMs": 70240,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אותי",
+        "startMs": 70661,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "startMs": 71764,
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ל",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "בחרו בי",
+        "startMs": 72494,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לשחק",
+        "startMs": 73031,
+        "stutters": []
+      },
+      {
+        "kind": "rewind",
+        "target": "נשארתי",
+        "startMs": 73463,
+        "attempts": [
+          "נשאר",
+          "נשארתי"
+        ],
+        "attemptStarts": [
+          73463,
+          73898
+        ],
+        "finalStutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לבד",
+        "startMs": 74562,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בהפסקות",
+        "startMs": 75147,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בכלל לא",
+        "startMs": 75696,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "היה לי",
+        "startMs": 76074,
+        "stutters": []
+      },
+      {
+        "kind": "filler",
+        "target": "עם",
+        "startMs": 76280,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מי להיות",
+        "startMs": 76625,
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "מ",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "הייתי",
+        "startMs": 77219,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בכלל",
+        "startMs": 77545,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "השומר",
+        "startMs": 77811,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כאילו",
+        "startMs": 78535,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "הוא היה",
+        "startMs": 79351,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ממש נחמד",
+        "startMs": 79628,
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 8,
+    "raw": "ופשוט כל הזמן שדיברתי פשוט התחלתי ללל-להתקע (כל) כל מ------משפט.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "ופשוט",
+        "startMs": 80586,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כל",
+        "startMs": 81442,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "הזמן",
+        "startMs": 81781,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שדיברתי",
+        "startMs": 82082,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "פשוט",
+        "startMs": 82887,
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "התחלתי",
+        "startMs": 83147,
+        "stutters": []
+      },
+      {
+        "kind": "filler",
+        "target": "להיתקע",
+        "startMs": 83601,
+        "attempts": [
+          "ל",
+          "ל",
+          "להיתקע"
+        ],
+        "attemptStarts": [
+          83601,
+          84373,
+          85006
+        ],
+        "finalStutters": []
+      },
+      {
+        "kind": "ghost",
+        "text": "כל",
+        "startMs": 86054
+      },
+      {
+        "kind": "word",
+        "target": "משפט",
+        "startMs": 87043,
+        "stutters": [
+          {
+            "type": "prolong-bridge",
+            "letter": "מ",
+            "intensity": 4,
+            "position": 0,
+            "holdUntilMs": 88414
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "utterance_id": 9,
+    "raw": "בסוף כיתה ג' פשוט התחלתי לגמגם וכל היייילדים שצ-צחקו עליי.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "בסוף",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כיתה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ג'",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "פשוט",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "התחלתי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לגמגם",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "וכל",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "הילדים",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "י",
+            "intensity": 4,
+            "position": 1
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "שצחקו",
+        "stutters": [
+          {
+            "type": "repeat-dash",
+            "letter": "צ",
+            "intensity": 2,
+            "position": 1
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "עליי.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 10,
+    "raw": "ה-היו הרבה הרבה ילדים שהיו עושים את זה כמעט כל יום.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "היו",
+        "stutters": [
+          {
+            "type": "repeat-dash",
+            "letter": "ה",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "הרבה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "הרבה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ילדים",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שהיו",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "עושים",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "את",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "זה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כמעט",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כל",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "יום.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 11,
+    "raw": "(לא הפס) לא הפסיקו לשאול מה את מגמגמת או כל מיני ש---שא---אלות ק ממש מעצבנות זה היה ממש קשה.",
+    "events": [
+      {
+        "kind": "ghost",
+        "text": "לא הפס"
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "הפסיקו",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לשאול",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "את",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מגמגמת",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "או",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כל",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מיני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שאלות",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ש",
+            "intensity": 3,
+            "position": 0
+          },
+          {
+            "type": "prolong",
+            "letter": "א",
+            "intensity": 3,
+            "position": 1
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "ק",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ממש",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מעצבנות",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "זה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "היה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ממש",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "קשה.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 12,
+    "raw": "אני לא ממש זזזוכר זמן שלא גגגגגגגמגמתי. כאילו לפי מה שששששששאני יודע זה מאז שיכולתי לללללדבר.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ממש",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "זוכר",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "ז",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "זמן",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שלא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "גמגמתי.",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "ג",
+            "intensity": 7,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "כאילו",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לפי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שאני",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "ש",
+            "intensity": 7,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "יודע",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "זה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מאז",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שיכולתי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לדבר.",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "ל",
+            "intensity": 5,
+            "position": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "utterance_id": 13,
+    "raw": "אני מדבר שלוש וחצי שפות ואני מ---מגמגם בכולם.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מדבר",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שלוש",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "וחצי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שפות",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ואני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מגמגם",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "מ",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "בכולם.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 14,
+    "raw": "(אני) אני יכול סוג של להרגיש בבבאיזה מילים אני אאאאגמגם ובאיזה לא.",
+    "events": [
+      {
+        "kind": "ghost",
+        "text": "אני"
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "יכול",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "סוג",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "של",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "להרגיש",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "באיזה",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "ב",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "מילים",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אגמגם",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "א",
+            "intensity": 4,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "ובאיזה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לא.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 15,
+    "raw": "אין ממש איך להסביר את התחושה הזאת, מי שלא ח----חווה את זה או חווה את זה, כשאת מממרגישה שאת הולכת לגמגם.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "אין",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ממש",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "איך",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "להסביר",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "את",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "התחושה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "הזאת,",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שלא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "חווה",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ח",
+            "intensity": 4,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "את",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "זה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "או",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "חווה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "את",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "זה,",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כשאת",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מרגישה",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "מ",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "שאת",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "הולכת",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לגמגם.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 16,
+    "raw": "אז בוא תנסה להחליף את המילה או לפני או בזמן שאני מממממגמגם.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "אז",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בוא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "תנסה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "להחליף",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "את",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "המילה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "או",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לפני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "או",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בזמן",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שאני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מגמגם.",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "מ",
+            "intensity": 5,
+            "position": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "utterance_id": 17,
+    "raw": "הייתי אצל קלינאית תקשורת והיא אמרה לי לנשום ב-בין מילה ל—למילה.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "הייתי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אצל",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "קלינאית",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "תקשורת",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "והיא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אמרה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לנשום",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בין",
+        "stutters": [
+          {
+            "type": "repeat-dash",
+            "letter": "ב",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "מילה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ל—למילה.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 18,
+    "raw": "או נגיד יש לפעמים שאני מרגישה שאני אגמגם אז אני מוסיפה ה׳ בהתחלה במקום ע--עיתון כאילו שאני אגמגם אני אומרת העיתון.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "או",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "נגיד",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "יש",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לפעמים",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שאני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מרגישה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שאני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אגמגם",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אז",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מוסיפה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ה׳",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בהתחלה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "במקום",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "עיתון",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ע",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "כאילו",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שאני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אגמגם",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אומרת",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "העיתון.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 19,
+    "raw": "אאאולי למישהו זה עוזר אולי למישהו אחר זה---ה לא עוזר, לי זה לא עוזר.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "אולי",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "א",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "למישהו",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "זה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "עוזר",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אולי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "למישהו",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אחר",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "זה",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ה",
+            "intensity": 3,
+            "position": 1
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "עוזר,",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "זה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "עוזר.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 20,
+    "raw": "לפעמים זה מ---מעייף, כאילו מה עכשיו אני אאאאנשום כל---ל שתי שניות אז אני כבר----ר לללא עושה את זה.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "לפעמים",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "זה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מעייף,",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "מ",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "כאילו",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "עכשיו",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אנשום",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "א",
+            "intensity": 4,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "כל",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ל",
+            "intensity": 3,
+            "position": 1
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "שתי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שניות",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אז",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כבר",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ר",
+            "intensity": 4,
+            "position": 2
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "ל",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "עושה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "את",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "זה.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 21,
+    "raw": "לפעמים את מעדיפה ללללל-------לשתוק?",
+    "events": [
+      {
+        "kind": "word",
+        "target": "לפעמים",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "את",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מעדיפה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לשתוק?",
+        "stutters": [
+          {
+            "type": "mixed",
+            "letter": "ל",
+            "repeat_count": 5,
+            "prolong_intensity": 7,
+            "position": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "utterance_id": 22,
+    "raw": "וואו איזה שאלה.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "וואו",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "איזה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שאלה.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 23,
+    "raw": "שאלה לא טובה בעיניי. בכלל.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "שאלה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "טובה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בעיניי.",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בכלל.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 24,
+    "raw": "אאני ב----בטוח שכל ילד שהוא מ----מגמגם ה---הוא פשוט מע----עדיף ללל-------לשתוק.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "אאני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בטוח",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ב",
+            "intensity": 4,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "שכל",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ילד",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שהוא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מגמגם",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "מ",
+            "intensity": 4,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "הוא",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ה",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "פשוט",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מעדיף",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ע",
+            "intensity": 4,
+            "position": 1
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "לשתוק.",
+        "stutters": [
+          {
+            "type": "mixed",
+            "letter": "ל",
+            "repeat_count": 3,
+            "prolong_intensity": 7,
+            "position": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "utterance_id": 25,
+    "raw": "כן.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "כן.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 26,
+    "raw": "האמת שכן.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "האמת",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שכן.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 27,
+    "raw": "לא. אף פעם לא מעדיף לשתוק. אני אף פעם לא מעדיף ללשתוק מאשר ללדבר, תמיד לדבר.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "לא.",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אף",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "פעם",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מעדיף",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לשתוק.",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אף",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "פעם",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מעדיף",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ללשתוק",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מאשר",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ללדבר,",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "תמיד",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לדבר.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 28,
+    "raw": "אני ל---לא כל כך אשתוק.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ל",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "כל",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כך",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אשתוק.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 29,
+    "raw": "למה שאני אאאשתוק וואצא ח--חסר תועלת.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "למה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שאני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אשתוק",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "א",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "וואצא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "חסר",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ח",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "תועלת.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 30,
+    "raw": "נגיד אם אני בסופר עם ההורים שלי או במ---מסעדות או משהו אני עדיף ל---לשתוק כדי ל--לחסוך מאחרים כי פשוט אני מ----מרגישה לא הכי ב--------בנוח עם זה.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "נגיד",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אם",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בסופר",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "עם",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ההורים",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שלי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "או",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "במסעדות",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "מ",
+            "intensity": 3,
+            "position": 1
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "או",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "משהו",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "עדיף",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לשתוק",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ל",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "כדי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לחסוך",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ל",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "מאחרים",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "פשוט",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מרגישה",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "מ",
+            "intensity": 4,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "הכי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בנוח",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ב",
+            "intensity": 8,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "עם",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "זה.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 31,
+    "raw": "נגיד אם יבוא מלצר אז אני עדיף שמישהו אחר יגיד לו מ---מה אני מה מזמינה כי אני מ--מתביישת שאני אגמגם.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "נגיד",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אם",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "יבוא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מלצר",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אז",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "עדיף",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שמישהו",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אחר",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "יגיד",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לו",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מה",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "מ",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מזמינה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מתביישת",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "מ",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "שאני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אגמגם.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 32,
+    "raw": "אני לא הייתי מרים יד בכיתה אלא אם היה לי כאילו או שאני ממש ידעתי שאני לא אאאאאאגמגם או שממש הייתה לי את התשובה שלף אחד אחר לא היה.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "הייתי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מרים",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "יד",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בכיתה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אלא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אם",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "היה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כאילו",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "או",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שאני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ממש",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ידעתי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שאני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אגמגם",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "א",
+            "intensity": 6,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "או",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שממש",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "הייתה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "את",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "התשובה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שלף",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אחד",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אחר",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "היה.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 33,
+    "raw": "אני (אם) אם כ--כאילו אני ארים א--אצבע והמורה לא מסתכל עליי אני לא מ--מוותר אני א--ארים יותר גגג--גבוה ואומר אני אני אני אני. אאאאני אף פעם ל--לא לא אוותר על משהו שאני רוצה.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "ghost",
+        "text": "אם"
+      },
+      {
+        "kind": "word",
+        "target": "אם",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כאילו",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "כ",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ארים",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אצבע",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "א",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "והמורה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מסתכל",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "עליי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מוותר",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "מ",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ארים",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "א",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "יותר",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "גבוה",
+        "stutters": [
+          {
+            "type": "mixed",
+            "letter": "ג",
+            "repeat_count": 3,
+            "prolong_intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "ואומר",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני.",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "א",
+            "intensity": 4,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "אף",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "פעם",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ל",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אוותר",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "על",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "משהו",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שאני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "רוצה.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 34,
+    "raw": "אני חושבת שזה הופך אותי לבן אדם קצת יותר ב---ביישן.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "חושבת",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שזה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "הופך",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אותי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לבן",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אדם",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "קצת",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "יותר",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ביישן.",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ב",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "utterance_id": 35,
+    "raw": "זה עשה אותי פעם הההרבה יותר בבבביישן היו לי ב--בכל הסודי כזה שני חחחחחברים וזהו.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "זה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "עשה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אותי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "פעם",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "הרבה",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "ה",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "יותר",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ביישן",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "ב",
+            "intensity": 4,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "היו",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בכל",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ב",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "הסודי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כזה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "חברים",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "ח",
+            "intensity": 5,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "וזהו.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 36,
+    "raw": "אני הייתי די ל------לבד.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "הייתי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "די",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לבד.",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ל",
+            "intensity": 6,
+            "position": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "utterance_id": 37,
+    "raw": "אני הרבה פחות הצלחתי כאילו לדבר עם אנשים ול--להתחיל שיחה.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "הרבה",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "פחות",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "הצלחתי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כאילו",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לדבר",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "עם",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אנשים",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ולהתחיל",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ל",
+            "intensity": 2,
+            "position": 1
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "שיחה.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 38,
+    "raw": "אני לא הולך לצופים או שאאאני לא הולך לשום מ-מסגרת חברתית א---אחרת רק בגלל הג-----גמגום.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "הולך",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לצופים",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "או",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שאני",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "א",
+            "intensity": 3,
+            "position": 1
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "הולך",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לשום",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מסגרת",
+        "stutters": [
+          {
+            "type": "repeat-dash",
+            "letter": "מ",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "חברתית",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אחרת",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "א",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "רק",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "בגלל",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "הגמגום.",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ג",
+            "intensity": 5,
+            "position": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "utterance_id": 39,
+    "raw": "(אם אם) אם ממש מכירים אותי טוב רואים שאני ממש זורמת, מדברת.",
+    "events": [
+      {
+        "kind": "ghost",
+        "text": "אם אם"
+      },
+      {
+        "kind": "word",
+        "target": "אם",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ממש",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מכירים",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אותי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "טוב",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "רואים",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שאני",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "ממש",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "זורמת,",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "מדברת.",
+        "stutters": []
+      }
+    ]
+  },
+  {
+    "utterance_id": 40,
+    "raw": "הם ל--לא יודעים ש--שגם א--אני יודע טטטוב מאוד כמו כל הת--תלמידים האחרים, (אולי) אולי אפילו קצת יייותר טוב.",
+    "events": [
+      {
+        "kind": "word",
+        "target": "הם",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "לא",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ל",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "יודעים",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "שגם",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ש",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "אני",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "א",
+            "intensity": 2,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "יודע",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "טוב",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "ט",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "מאוד",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כמו",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "כל",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "התלמידים",
+        "stutters": [
+          {
+            "type": "prolong",
+            "letter": "ת",
+            "intensity": 2,
+            "position": 1
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "האחרים,",
+        "stutters": []
+      },
+      {
+        "kind": "ghost",
+        "text": "אולי"
+      },
+      {
+        "kind": "word",
+        "target": "אולי",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "אפילו",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "קצת",
+        "stutters": []
+      },
+      {
+        "kind": "word",
+        "target": "יותר",
+        "stutters": [
+          {
+            "type": "repeat",
+            "letter": "י",
+            "intensity": 3,
+            "position": 0
+          }
+        ]
+      },
+      {
+        "kind": "word",
+        "target": "טוב.",
+        "stutters": []
+      }
+    ]
+  }
+]

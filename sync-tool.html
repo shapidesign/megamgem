@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Megamgem Sync Tool</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0f;--surface:#14141f;--surface2:#1e1e2e;--border:#2a2a3e;--text:#e8e6f0;--dim:#7a7890;--accent:#e04040;--accent2:#ff6b6b;--green:#40c060;--blue:#4080e0;--orange:#e09040;--purple:#a060e0;--mono:ui-monospace,'JetBrains Mono',monospace;--sans:'Inter',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.app{height:100vh;display:grid;grid-template-rows:auto auto 1fr auto;gap:0}
+
+.topbar{padding:14px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--surface)}
+.topbar h1{font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.topbar h1 b{color:var(--accent)}
+.topbar .status{font-size:12px;color:var(--dim);font-family:var(--mono)}
+
+.wave-section{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 24px;position:relative}
+.wave-wrap{position:relative;height:120px;background:var(--bg);border-radius:8px;overflow:hidden;cursor:pointer}
+#waveCanvas{width:100%;height:100%;display:block}
+#playhead{position:absolute;top:0;left:0;width:2px;height:100%;background:var(--accent);pointer-events:none;z-index:2;transition:none}
+.wave-controls{display:flex;align-items:center;gap:12px;margin-top:10px}
+.wave-time{font-family:var(--mono);font-size:13px;color:var(--dim)}
+.wave-time b{color:var(--text)}
+.drop-overlay{position:absolute;inset:0;background:rgba(224,64,64,.1);border:2px dashed var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;pointer-events:none;opacity:0;transition:opacity .2s}
+.wave-wrap.dragover .drop-overlay{opacity:1}
+.no-audio{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:13px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.no-audio:hover{color:var(--accent)}
+
+.main{display:grid;grid-template-columns:1fr 340px;overflow:hidden}
+.stage{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;position:relative;overflow:hidden}
+.utt-counter{position:absolute;top:20px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.12em;text-transform:uppercase}
+.utt-counter b{color:var(--accent)}
+.utt-text{font-family:'Frank Ruhl Libre',serif;font-size:clamp(24px,3.5vw,42px);line-height:1.6;text-align:center;color:var(--text);max-width:800px;direction:rtl}
+.stutter-tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:20px}
+.stag{padding:3px 10px;border-radius:12px;font-size:10px;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;border:1px solid}
+.stag.R{color:var(--orange);border-color:var(--orange)}
+.stag.P{color:var(--blue);border-color:var(--blue)}
+.stag.G{color:var(--purple);border-color:var(--purple)}
+.stag.M{color:var(--accent2);border-color:var(--accent2)}
+
+.edit-area{display:none;width:100%;max-width:800px;margin-top:12px}
+.edit-area.visible{display:flex;flex-direction:column;align-items:center;gap:10px}
+.edit-area textarea{width:100%;min-height:120px;background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:14px;font-family:'Frank Ruhl Libre',serif;font-size:18px;line-height:1.7;direction:rtl;resize:vertical;outline:none}
+.edit-area textarea:focus{border-color:var(--accent)}
+.edit-btns{display:flex;gap:8px}
+.utt-text{cursor:pointer;transition:opacity .15s}
+.utt-text:hover{opacity:.85}
+.edit-hint{font-size:10px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;margin-top:6px}
+
+.sidebar{background:var(--surface);border-inline-start:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.sidebar-head{padding:12px 16px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);display:flex;justify-content:space-between;align-items:center}
+.sidebar-head span{color:var(--green);font-family:var(--mono)}
+.utt-list{flex:1;overflow-y:auto;padding:4px 0}
+.utt-item{padding:8px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;display:flex;gap:10px;align-items:flex-start;direction:rtl}
+.utt-item:hover{background:var(--surface2)}
+.utt-item.active{background:rgba(224,64,64,.08);border-inline-start:3px solid var(--accent)}
+.utt-item.synced .utt-idx{color:var(--green)}
+.utt-idx{font-family:var(--mono);font-size:11px;color:var(--dim);min-width:24px;padding-top:2px;text-align:center}
+.utt-preview{font-size:12px;line-height:1.5;color:var(--dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.utt-item.active .utt-preview{color:var(--text)}
+.utt-item.synced .utt-preview{color:var(--text)}
+.utt-ts{font-family:var(--mono);font-size:10px;color:var(--green);min-width:44px;text-align:left;padding-top:2px}
+.add-btn{background:var(--accent);color:#fff;border:none;width:22px;height:22px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;transition:transform .15s}
+.add-btn:hover{transform:scale(1.15)}
+.utt-item .utt-del{display:none;color:var(--dim);cursor:pointer;font-size:10px;padding:2px 4px;border-radius:4px}
+.utt-item:hover .utt-del{display:block}
+.utt-item .utt-del:hover{color:var(--accent);background:var(--surface2)}
+
+.footer{padding:12px 24px;border-top:1px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn{background:transparent;color:var(--text);border:1px solid var(--border);padding:7px 16px;font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.06em;cursor:pointer;border-radius:6px;transition:all .15s;white-space:nowrap}
+.btn:hover{background:var(--surface2);border-color:var(--dim)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--accent2)}
+.btn.sm{padding:5px 12px;font-size:11px}
+kbd{display:inline-block;padding:2px 7px;background:var(--surface2);border:1px solid var(--border);border-radius:4px;font-family:var(--mono);font-size:11px;color:var(--text);margin:0 2px}
+.keys{font-size:11px;color:var(--dim);display:flex;gap:14px;flex-wrap:wrap;flex:1;justify-content:center}
+.speed-ctrl{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--dim)}
+.speed-ctrl input{width:60px;accent-color:var(--accent)}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:8px 20px;border-radius:8px;font-size:13px;font-weight:500;opacity:0;transition:opacity .3s;pointer-events:none;z-index:99}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <h1>Megamgem <b>Sync Tool</b></h1>
+    <div class="status" id="statusBar">Load audio to begin</div>
+  </div>
+  <div class="wave-section">
+    <div class="wave-wrap" id="waveWrap">
+      <canvas id="waveCanvas"></canvas>
+      <div id="playhead"></div>
+      <div class="no-audio" id="noAudio">Click or drop MP3 here</div>
+      <div class="drop-overlay">Drop audio file</div>
+      <input type="file" id="audioInput" accept="audio/*" hidden>
+    </div>
+    <div class="wave-controls">
+      <button class="btn primary" id="playBtn">▶ Play</button>
+      <div class="wave-time"><b id="curTime">00:00</b> / <span id="durTime">00:00</span></div>
+      <div style="flex:1"></div>
+      <div class="speed-ctrl">
+        <span>Speed</span>
+        <input type="range" id="speedSlider" min="0.3" max="1.5" step="0.05" value="1.0">
+        <span id="speedVal">1.0×</span>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="stage">
+      <div class="utt-counter">Utterance <b id="uttNum">1</b> / <b id="uttTotal">41</b></div>
+      <div class="utt-text" id="uttText" dir="rtl"></div>
+      <div class="edit-hint" id="editHint">click text to edit</div>
+      <div class="edit-area" id="editArea">
+        <textarea id="editTextarea" dir="rtl"></textarea>
+        <div class="edit-btns">
+          <button class="btn primary sm" id="editSave">Save (⌘↵)</button>
+          <button class="btn sm" id="editSkip">Skip →</button>
+          <button class="btn sm" id="editCancel">Cancel</button>
+        </div>
+      </div>
+      <div class="stutter-tags" id="stutterTags"></div>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-head">Utterances <span id="syncCount">0/41</span> <button class="add-btn" id="addUttBtn" title="Add new utterance">+</button></div>
+      <div class="utt-list" id="uttList"></div>
+    </div>
+  </div>
+  <div class="footer">
+    <button class="btn" id="exportBtn">Export anchors.json</button>
+    <button class="btn" id="exportTimelineBtn">Export timeline</button>
+    <button class="btn sm" id="undoBtn">Undo (Z)</button>
+    <button class="btn sm" id="clearBtn">Clear All</button>
+    <div class="keys">
+      <span><kbd>Space</kbd> Play/Pause</span>
+      <span><kbd>A</kbd> Mark utterance start</span>
+      <span><kbd>Z</kbd> Undo</span>
+      <span><kbd>E</kbd> Edit text</span>
+      <span><kbd>N</kbd> New utterance</span>
+      <span><kbd>← →</kbd> Seek ±2s</span>
+    </div>
+    <button class="btn sm" id="importBtn">Import</button>
+    <input type="file" id="importInput" accept=".json" hidden>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<audio id="audio" preload="auto"></audio>
+
+<script>
+const UTTS = [{"id":0,"raw":"ל-למה אתה מגמגם? זה בגנים אצלנו. אבא שלי, ה---האחים שלו וסבא שלי, אז אני גם.","si":[{"t":"R","l":"ל","w":"למה"},{"t":"P","l":"ה","w":"האחים"}]},{"id":1,"raw":"פשוט ככה זה בא לי.","si":[]},{"id":2,"raw":"אז מאז שאני זוווכר את עצמי אז אני מג---גמגם.","si":[{"t":"R","l":"ו","w":"זוכר"},{"t":"P","l":"ג","w":"מגמגם."}]},{"id":3,"raw":"אני מגמגם מגיל שלוש. מה שכ----כן אני יייודע שמא----אז ומע--עולם אני שא-אלתי את עצמי ללללמה ד-דווקא אאאאאאאני.","si":[{"t":"P","l":"כ","w":"שכן"},{"t":"R","l":"י","w":"יודע"},{"t":"P","l":"א","w":"שמאז"},{"t":"P","l":"ע","w":"ומעולם"},{"t":"R","l":"א","w":"שאלתי"},{"t":"R","l":"ל","w":"למה"},{"t":"R","l":"ד","w":"דווקא"},{"t":"R","l":"א","w":"אני."}]},{"id":4,"raw":"יש תתתיאוריות של שילוב של חרדה חחחחברתית ובעיות נשימה אבל אני לא באמת יודע אני מגמגם כי ככה.","si":[{"t":"R","l":"ת","w":"תיאוריות"},{"t":"R","l":"ח","w":"חברתית"}]},{"id":5,"raw":"עד כיתה גגגגגימל בעצם דיברתי רגיל כמו כל בן אדם כשהייתי בכיתה ג' עברתי (כל) כל השנה חרם ואז בעצם (בס) בסוף השנה התחלתי לגמגם.","si":[{"t":"R","l":"ג","w":"גימל"},{"t":"G","l":"","w":"כל"},{"t":"G","l":"","w":"בס"}]},{"id":6,"raw":"הייתה לי תקופה פ---פחות קלה המצב החברתי שלי לא היה הכי טוב.","si":[{"t":"P","l":"פ","w":"פחות"}]},{"id":7,"raw":"לא שיתפו אותי, לא בחרו בי לשחק, נש נשארתי לבד, בהפסקות בכלל לא היה לי מ-מי להיות, הייתי בכלל עם השומר כאילו הוא היה ממש נחמד.","si":[{"t":"R","l":"מ","w":"מי"}]},{"id":8,"raw":"ופשוט כל הזמן שדיברתי פשוט התחלתי ללל-להתקע (כל) כל מ------משפט.","si":[{"t":"M","l":"ל","w":"להתקע"},{"t":"G","l":"","w":"כל"},{"t":"P","l":"מ","w":"משפט."}]},{"id":9,"raw":"בסוף כיתה ג' פשוט התחלתי לגמגם וכל היייילדים שצ-צחקו עליי.","si":[{"t":"R","l":"י","w":"הילדים"},{"t":"R","l":"צ","w":"שצחקו"}]},{"id":10,"raw":"ה-היו הרבה הרבה ילדים שהיו עושים את זה כמעט כל יום.","si":[{"t":"R","l":"ה","w":"היו"}]},{"id":11,"raw":"(לא הפס) לא הפסיקו לשאול מה את מגמגמת או כל מיני ש---שא---אלות ק ממש מעצבנות זה היה ממש קשה.","si":[{"t":"G","l":"","w":"לא הפס"},{"t":"P","l":"ש","w":"שאלות"},{"t":"P","l":"א","w":"שאלות"}]},{"id":12,"raw":"אני לא ממש זזזוכר זמן שלא גגגגגגגמגמתי. כאילו לפי מה שששששששאני יודע זה מאז שיכולתי לללללדבר.","si":[{"t":"R","l":"ז","w":"זוכר"},{"t":"R","l":"ג","w":"גמגמתי."},{"t":"R","l":"ש","w":"שאני"},{"t":"R","l":"ל","w":"לדבר."}]},{"id":13,"raw":"אני מדבר שלוש וחצי שפות ואני מ---מגמגם בכולם.","si":[{"t":"P","l":"מ","w":"מגמגם"}]},{"id":14,"raw":"(אני) אני יכול סוג של להרגיש בבבאיזה מילים אני אאאאגמגם ובאיזה לא.","si":[{"t":"G","l":"","w":"אני"},{"t":"R","l":"ב","w":"באיזה"},{"t":"R","l":"א","w":"אגמגם"}]},{"id":15,"raw":"אין ממש איך להסביר את התחושה הזאת, מי שלא ח----חווה את זה או חווה את זה, כשאת מממרגישה שאת הולכת לגמגם.","si":[{"t":"P","l":"ח","w":"חווה"},{"t":"R","l":"מ","w":"מרגישה"}]},{"id":16,"raw":"אז בוא תנסה להחליף את המילה או לפני או בזמן שאני מממממגמגם.","si":[{"t":"R","l":"מ","w":"מגמגם."}]},{"id":17,"raw":"הייתי אצל קלינאית תקשורת והיא אמרה לי לנשום ב-בין מילה ל—למילה.","si":[{"t":"R","l":"ב","w":"בין"}]},{"id":18,"raw":"או נגיד יש לפעמים שאני מרגישה שאני אגמגם אז אני מוסיפה ה׳ בהתחלה במקום ע--עיתון כאילו שאני אגמגם אני אומרת העיתון.","si":[{"t":"P","l":"ע","w":"עיתון"}]},{"id":19,"raw":"אאאולי למישהו זה עוזר אולי למישהו אחר זה---ה לא עוזר, לי זה לא עוזר.","si":[{"t":"R","l":"א","w":"אולי"},{"t":"P","l":"ה","w":"זה"}]},{"id":20,"raw":"לפעמים זה מ---מעייף, כאילו מה עכשיו אני אאאאנשום כל---ל שתי שניות אז אני כבר----ר לללא עושה את זה.","si":[{"t":"P","l":"מ","w":"מעייף,"},{"t":"R","l":"א","w":"אנשום"},{"t":"P","l":"ל","w":"כל"},{"t":"P","l":"ר","w":"כבר"},{"t":"R","l":"ל","w":"לא"}]},{"id":21,"raw":"לפעמים את מעדיפה ללללל-------לשתוק?","si":[{"t":"M","l":"ל","w":"לשתוק?"}]},{"id":22,"raw":"וואו איזה שאלה.","si":[]},{"id":23,"raw":"שאלה לא טובה בעיניי. בכלל.","si":[]},{"id":24,"raw":"אאני ב----בטוח שכל ילד שהוא מ----מגמגם ה---הוא פשוט מע----עדיף ללל-------לשתוק.","si":[{"t":"P","l":"ב","w":"בטוח"},{"t":"P","l":"מ","w":"מגמגם"},{"t":"P","l":"ה","w":"הוא"},{"t":"P","l":"ע","w":"מעדיף"},{"t":"M","l":"ל","w":"לשתוק."}]},{"id":25,"raw":"כן.","si":[]},{"id":26,"raw":"האמת שכן.","si":[]},{"id":27,"raw":"לא. אף פעם לא מעדיף לשתוק. אני אף פעם לא מעדיף ללשתוק מאשר ללדבר, תמיד לדבר.","si":[]},{"id":28,"raw":"אני ל---לא כל כך אשתוק.","si":[{"t":"P","l":"ל","w":"לא"}]},{"id":29,"raw":"למה שאני אאאשתוק וואצא ח--חסר תועלת.","si":[{"t":"R","l":"א","w":"אשתוק"},{"t":"P","l":"ח","w":"חסר"}]},{"id":30,"raw":"נגיד אם אני בסופר עם ההורים שלי או במ---מסעדות או משהו אני עדיף ל---לשתוק כדי ל--לחסוך מאחרים כי פשוט אני מ----מרגישה לא הכי ב--------בנוח עם זה.","si":[{"t":"P","l":"מ","w":"במסעדות"},{"t":"P","l":"ל","w":"לשתוק"},{"t":"P","l":"ל","w":"לחסוך"},{"t":"P","l":"מ","w":"מרגישה"},{"t":"P","l":"ב","w":"בנוח"}]},{"id":31,"raw":"נגיד אם יבוא מלצר אז אני עדיף שמישהו אחר יגיד לו מ---מה אני מה מזמינה כי אני מ--מתביישת שאני אגמגם.","si":[{"t":"P","l":"מ","w":"מה"},{"t":"P","l":"מ","w":"מתביישת"}]},{"id":32,"raw":"אני לא הייתי מרים יד בכיתה אלא אם היה לי כאילו או שאני ממש ידעתי שאני לא אאאאאאגמגם או שממש הייתה לי את התשובה שלף אחד אחר לא היה.","si":[{"t":"R","l":"א","w":"אגמגם"}]},{"id":33,"raw":"אני (אם) אם כ--כאילו אני ארים א--אצבע והמורה לא מסתכל עליי אני לא מ--מוותר אני א--ארים יותר גגג--גבוה ואומר אני אני אני אני. אאאאני אף פעם ל--לא לא אוותר על משהו שאני רוצה.","si":[{"t":"G","l":"","w":"אם"},{"t":"P","l":"כ","w":"כאילו"},{"t":"P","l":"א","w":"אצבע"},{"t":"P","l":"מ","w":"מוותר"},{"t":"P","l":"א","w":"ארים"},{"t":"M","l":"ג","w":"גבוה"},{"t":"R","l":"א","w":"אני"},{"t":"P","l":"ל","w":"לא"}]},{"id":34,"raw":"אני חושבת שזה הופך אותי לבן אדם קצת יותר ב---ביישן.","si":[{"t":"P","l":"ב","w":"ביישן."}]},{"id":35,"raw":"זה עשה אותי פעם הההרבה יותר בבבביישן היו לי ב--בכל הסודי כזה שני חחחחחברים וזהו.","si":[{"t":"R","l":"ה","w":"הרבה"},{"t":"R","l":"ב","w":"ביישן"},{"t":"P","l":"ב","w":"בכל"},{"t":"R","l":"ח","w":"חברים"}]},{"id":36,"raw":"אני הייתי די ל------לבד.","si":[{"t":"P","l":"ל","w":"לבד."}]},{"id":37,"raw":"אני הרבה פחות הצלחתי כאילו לדבר עם אנשים ול--להתחיל שיחה.","si":[{"t":"P","l":"ל","w":"ולהתחיל"}]},{"id":38,"raw":"אני לא הולך לצופים או שאאאני לא הולך לשום מ-מסגרת חברתית א---אחרת רק בגלל הג-----גמגום.","si":[{"t":"R","l":"א","w":"שאני"},{"t":"R","l":"מ","w":"מסגרת"},{"t":"P","l":"א","w":"אחרת"},{"t":"P","l":"ג","w":"הגמגום."}]},{"id":39,"raw":"(אם אם) אם ממש מכירים אותי טוב רואים שאני ממש זורמת, מדברת.","si":[{"t":"G","l":"","w":"אם אם"}]},{"id":40,"raw":"הם ל--לא יודעים ש--שגם א--אני יודע טטטוב מאוד כמו כל הת--תלמידים האחרים, (אולי) אולי אפילו קצת יייותר טוב.","si":[{"t":"P","l":"ל","w":"לא"},{"t":"P","l":"ש","w":"שגם"},{"t":"P","l":"א","w":"אני"},{"t":"R","l":"ט","w":"טוב"},{"t":"P","l":"ת","w":"התלמידים"},{"t":"G","l":"","w":"אולי"},{"t":"R","l":"י","w":"יותר"}]}];
+
+const audio = document.getElementById('audio');
+const canvas = document.getElementById('waveCanvas');
+const ctx = canvas.getContext('2d');
+const playhead = document.getElementById('playhead');
+const waveWrap = document.getElementById('waveWrap');
+const noAudio = document.getElementById('noAudio');
+const uttText = document.getElementById('uttText');
+const stutterTags = document.getElementById('stutterTags');
+const uttNum = document.getElementById('uttNum');
+const uttTotal = document.getElementById('uttTotal');
+const uttList = document.getElementById('uttList');
+const curTime = document.getElementById('curTime');
+const durTime = document.getElementById('durTime');
+const playBtn = document.getElementById('playBtn');
+const syncCount = document.getElementById('syncCount');
+const statusBar = document.getElementById('statusBar');
+const toast = document.getElementById('toast');
+
+let waveData = null;
+let audioLoaded = false;
+let playing = false;
+let currentIdx = 0;
+let anchors = {};
+let history = [];
+
+uttTotal.textContent = UTTS.length;
+
+function addUtteranceToSidebar(u, i, isActive) {
+  const el = document.createElement('div');
+  el.className = 'utt-item' + (isActive ? ' active' : '');
+  el.dataset.idx = i;
+  el.innerHTML = `<div class="utt-idx">${i}</div><div class="utt-preview">${u.raw.substring(0,60)}</div><div class="utt-ts" id="ts_${i}">—</div>`;
+  el.addEventListener('click', () => goToUtterance(i));
+  uttList.appendChild(el);
+}
+
+function rebuildSidebar() {
+  uttList.innerHTML = '';
+  UTTS.forEach((u,i) => addUtteranceToSidebar(u, i, i === currentIdx));
+  // Re-apply synced state
+  Object.keys(anchors).forEach(k => {
+    const idx = parseInt(k);
+    const tsEl = document.getElementById('ts_' + idx);
+    if(tsEl) tsEl.textContent = fmtTime(anchors[idx]);
+    const itemEl = document.querySelector(`.utt-item[data-idx="${idx}"]`);
+    if(itemEl) itemEl.classList.add('synced');
+  });
+  uttTotal.textContent = UTTS.length;
+}
+
+function addUtterance() {
+  const newId = UTTS.length;
+  UTTS.push({id: newId, raw: '(new utterance — click to edit)', si: []});
+  addUtteranceToSidebar(UTTS[newId], newId, false);
+  uttTotal.textContent = UTTS.length;
+  updateSyncCount();
+  // Jump to the new utterance
+  showUtterance(newId);
+  // Open editor immediately
+  startEdit();
+  showToast(`Added utterance ${newId}`);
+}
+
+// Build sidebar
+UTTS.forEach((u,i) => addUtteranceToSidebar(u, i, i === 0));
+
+function showUtterance(idx) {
+  if(typeof editing !== 'undefined' && editing) cancelEdit();
+  currentIdx = Math.max(0, Math.min(idx, UTTS.length-1));
+  const u = UTTS[currentIdx];
+  uttText.textContent = u.raw;
+  uttNum.textContent = currentIdx + 1;
+  
+  // Stutter tags
+  stutterTags.innerHTML = '';
+  const typeNames = {R:'Repeat',P:'Prolong',G:'Ghost',M:'Mixed'};
+  u.si.forEach(s => {
+    const tag = document.createElement('span');
+    tag.className = 'stag ' + s.t;
+    tag.textContent = `${typeNames[s.t]||s.t}${s.l?' · '+s.l:''} → ${s.w}`;
+    stutterTags.appendChild(tag);
+  });
+  
+  // Update sidebar active
+  document.querySelectorAll('.utt-item').forEach(el => el.classList.remove('active'));
+  const activeEl = document.querySelector(`.utt-item[data-idx="${currentIdx}"]`);
+  if(activeEl) {
+    activeEl.classList.add('active');
+    activeEl.scrollIntoView({block:'nearest',behavior:'smooth'});
+  }
+  updateSyncCount();
+}
+
+function goToUtterance(idx) {
+  showUtterance(idx);
+  if(audioLoaded && anchors[idx] !== undefined) {
+    audio.currentTime = anchors[idx] / 1000;
+  }
+}
+
+function markUtterance() {
+  if(!audioLoaded) { showToast('Load audio first!'); return; }
+  const ms = Math.round(audio.currentTime * 1000);
+  history.push({idx: currentIdx, prev: anchors[currentIdx]});
+  anchors[currentIdx] = ms;
+  
+  const tsEl = document.getElementById('ts_' + currentIdx);
+  if(tsEl) tsEl.textContent = fmtTime(ms);
+  
+  const itemEl = document.querySelector(`.utt-item[data-idx="${currentIdx}"]`);
+  if(itemEl) itemEl.classList.add('synced');
+  
+  showToast(`✓ Utterance ${currentIdx} @ ${fmtTime(ms)} — now type the text`);
+  drawAnchorsOnWave();
+  updateSyncCount();
+  
+  // Pause audio and open editor so user can type the sentence
+  if(playing) { audio.pause(); playing = false; playBtn.textContent = '▶ Play'; }
+  startEdit();
+}
+
+function undoLast() {
+  if(!history.length) return;
+  const last = history.pop();
+  if(last.prev === undefined) {
+    delete anchors[last.idx];
+    const tsEl = document.getElementById('ts_' + last.idx);
+    if(tsEl) tsEl.textContent = '—';
+    const itemEl = document.querySelector(`.utt-item[data-idx="${last.idx}"]`);
+    if(itemEl) itemEl.classList.remove('synced');
+  } else {
+    anchors[last.idx] = last.prev;
+    const tsEl = document.getElementById('ts_' + last.idx);
+    if(tsEl) tsEl.textContent = fmtTime(last.prev);
+  }
+  showUtterance(last.idx);
+  drawAnchorsOnWave();
+  showToast('Undone');
+}
+
+function updateSyncCount() {
+  const n = Object.keys(anchors).length;
+  syncCount.textContent = `${n}/${UTTS.length}`;
+  statusBar.textContent = n === UTTS.length ? '✓ All synced! Export when ready.' :
+    `Syncing utterance ${currentIdx+1}/${UTTS.length} — press A to mark`;
+}
+
+// Audio loading
+function loadAudioFile(file) {
+  const url = URL.createObjectURL(file);
+  audio.src = url;
+  audio.addEventListener('loadedmetadata', () => {
+    audioLoaded = true;
+    noAudio.style.display = 'none';
+    durTime.textContent = fmtTime(audio.duration * 1000);
+    statusBar.textContent = `Loaded: ${file.name} — press Space to play, A to mark`;
+    drawWaveform(file);
+  }, {once:true});
+}
+
+async function drawWaveform(file) {
+  const actx = new (window.AudioContext || window.webkitAudioContext)();
+  const buf = await file.arrayBuffer();
+  const decoded = await actx.decodeAudioData(buf);
+  const raw = decoded.getChannelData(0);
+  
+  const dpr = window.devicePixelRatio || 1;
+  const w = canvas.clientWidth;
+  const h = canvas.clientHeight;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  ctx.scale(dpr, dpr);
+  
+  // Downsample
+  const samples = w * 2;
+  waveData = new Float32Array(samples);
+  const step = Math.floor(raw.length / samples);
+  for(let i=0;i<samples;i++) {
+    let max = 0;
+    for(let j=0;j<step;j++) {
+      const v = Math.abs(raw[i*step+j] || 0);
+      if(v>max) max=v;
+    }
+    waveData[i] = max;
+  }
+  
+  renderWave();
+  actx.close();
+}
+
+function renderWave() {
+  if(!waveData) return;
+  const w = canvas.clientWidth;
+  const h = canvas.clientHeight;
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  ctx.scale(dpr, dpr);
+  
+  ctx.fillStyle = '#0a0a0f';
+  ctx.fillRect(0,0,w,h);
+  
+  const barW = w / waveData.length;
+  const mid = h / 2;
+  
+  for(let i=0;i<waveData.length;i++) {
+    const amp = waveData[i] * mid * 0.9;
+    const x = i * barW;
+    // Color based on position
+    const pct = i / waveData.length;
+    const playPct = audioLoaded ? audio.currentTime / audio.duration : 0;
+    ctx.fillStyle = pct < playPct ? 'rgba(224,64,64,0.7)' : 'rgba(122,120,144,0.4)';
+    ctx.fillRect(x, mid - amp, Math.max(1, barW - 0.5), amp * 2);
+  }
+  
+  drawAnchorsOnWave();
+}
+
+function drawAnchorsOnWave() {
+  if(!waveData || !audioLoaded) return;
+  const w = canvas.clientWidth;
+  const h = canvas.clientHeight;
+  const dur = audio.duration;
+  
+  Object.keys(anchors).forEach(k => {
+    const ms = anchors[k];
+    const x = (ms / 1000 / dur) * w;
+    ctx.fillStyle = 'rgba(64,192,96,0.6)';
+    ctx.fillRect(x-1, 0, 2, h);
+    ctx.fillStyle = 'rgba(64,192,96,0.9)';
+    ctx.font = '9px Inter';
+    ctx.textAlign = 'center';
+    ctx.fillText(k, x, 10);
+  });
+}
+
+// Playback
+function togglePlay() {
+  if(!audioLoaded) return;
+  if(playing) {
+    audio.pause(); playing=false;
+    playBtn.textContent = '▶ Play';
+  } else {
+    audio.play(); playing=true;
+    playBtn.textContent = '❚❚ Pause';
+    tick();
+  }
+}
+
+function tick() {
+  if(!playing) return;
+  const t = audio.currentTime;
+  const dur = audio.duration;
+  playhead.style.left = (t/dur*100)+'%';
+  curTime.textContent = fmtTime(t*1000);
+  renderWave();
+  
+  // Auto-highlight current utterance based on anchors
+  const sortedAnchors = Object.keys(anchors).map(Number).sort((a,b)=>anchors[a]-anchors[b]);
+  let matchIdx = -1;
+  for(const idx of sortedAnchors) {
+    if(anchors[idx] <= t*1000) matchIdx = idx;
+  }
+  
+  requestAnimationFrame(tick);
+}
+
+// Seeking
+waveWrap.addEventListener('click', e => {
+  if(!audioLoaded || e.target === noAudio) return;
+  const rect = waveWrap.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  audio.currentTime = pct * audio.duration;
+  renderWave();
+  playhead.style.left = (pct*100)+'%';
+  curTime.textContent = fmtTime(audio.currentTime*1000);
+});
+
+// Drag & drop
+noAudio.addEventListener('click', () => document.getElementById('audioInput').click());
+waveWrap.addEventListener('dragover', e => { e.preventDefault(); waveWrap.classList.add('dragover'); });
+waveWrap.addEventListener('dragleave', () => waveWrap.classList.remove('dragover'));
+waveWrap.addEventListener('drop', e => {
+  e.preventDefault(); waveWrap.classList.remove('dragover');
+  const f = e.dataTransfer.files[0];
+  if(f) loadAudioFile(f);
+});
+document.getElementById('audioInput').addEventListener('change', e => {
+  if(e.target.files[0]) loadAudioFile(e.target.files[0]);
+});
+
+// Edit mode
+let editing = false;
+const editArea = document.getElementById('editArea');
+const editTextarea = document.getElementById('editTextarea');
+const editHint = document.getElementById('editHint');
+
+function startEdit() {
+  editing = true;
+  editTextarea.value = UTTS[currentIdx].raw;
+  editArea.classList.add('visible');
+  uttText.style.display = 'none';
+  editHint.style.display = 'none';
+  editTextarea.focus();
+}
+function cancelEdit() {
+  editing = false;
+  editArea.classList.remove('visible');
+  uttText.style.display = '';
+  editHint.style.display = '';
+}
+function saveEdit() {
+  const newText = editTextarea.value.trim();
+  if(newText) {
+    UTTS[currentIdx].raw = newText;
+    uttText.textContent = newText;
+    // Update sidebar preview
+    const previewEl = document.querySelector(`.utt-item[data-idx="${currentIdx}"] .utt-preview`);
+    if(previewEl) previewEl.textContent = newText.substring(0,60);
+    showToast('Saved ✓ — advancing to next');
+  }
+  cancelEdit();
+  // Advance to next utterance
+  if(currentIdx < UTTS.length - 1) showUtterance(currentIdx + 1);
+}
+function skipEdit() {
+  cancelEdit();
+  if(currentIdx < UTTS.length - 1) showUtterance(currentIdx + 1);
+}
+
+uttText.addEventListener('click', startEdit);
+document.getElementById('editSave').addEventListener('click', saveEdit);
+document.getElementById('editSkip').addEventListener('click', skipEdit);
+document.getElementById('editCancel').addEventListener('click', cancelEdit);
+editTextarea.addEventListener('keydown', e => {
+  if(e.code === 'Escape') { e.preventDefault(); cancelEdit(); }
+  if(e.code === 'Enter' && e.metaKey) { e.preventDefault(); saveEdit(); }
+  if(e.code === 'Tab') { e.preventDefault(); skipEdit(); }
+  e.stopPropagation(); // Don't trigger global keys while editing
+});
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if(editing) return; // Skip global shortcuts while editing text
+  if(e.code === 'Space') { e.preventDefault(); togglePlay(); }
+  else if(e.code === 'KeyA' && !e.metaKey && !e.ctrlKey) { e.preventDefault(); markUtterance(); }
+  else if(e.code === 'KeyZ' && !e.metaKey) { e.preventDefault(); undoLast(); }
+  else if(e.code === 'KeyE' && !e.metaKey) { e.preventDefault(); startEdit(); }
+  else if(e.code === 'KeyN' && !e.metaKey) { e.preventDefault(); addUtterance(); }
+  else if(e.code === 'ArrowLeft') {
+    e.preventDefault();
+    if(audioLoaded) { audio.currentTime = Math.max(0, audio.currentTime - 2); renderWave(); curTime.textContent = fmtTime(audio.currentTime*1000); }
+  }
+  else if(e.code === 'ArrowRight') {
+    e.preventDefault();
+    if(audioLoaded) { audio.currentTime = Math.min(audio.duration, audio.currentTime + 2); renderWave(); curTime.textContent = fmtTime(audio.currentTime*1000); }
+  }
+});
+
+// Buttons
+playBtn.addEventListener('click', togglePlay);
+document.getElementById('undoBtn').addEventListener('click', undoLast);
+document.getElementById('clearBtn').addEventListener('click', () => {
+  if(!confirm('Clear all anchors?')) return;
+  anchors = {}; history = [];
+  document.querySelectorAll('.utt-item').forEach(el => el.classList.remove('synced'));
+  document.querySelectorAll('[id^="ts_"]').forEach(el => el.textContent = '—');
+  showUtterance(0);
+  if(waveData) renderWave();
+});
+document.getElementById('speedSlider').addEventListener('input', e => {
+  const v = parseFloat(e.target.value);
+  document.getElementById('speedVal').textContent = v.toFixed(2)+'×';
+  if(audioLoaded) audio.playbackRate = v;
+});
+
+// Export
+document.getElementById('exportBtn').addEventListener('click', () => {
+  // Build anchors compatible with the player (string keys)
+  const out = {};
+  Object.keys(anchors).forEach(k => out[k] = anchors[k]);
+  const blob = new Blob([JSON.stringify(out, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'anchors.json';
+  a.click();
+  showToast('Exported anchors.json!');
+});
+
+// Export timeline (text + anchors combined)
+document.getElementById('exportTimelineBtn').addEventListener('click', () => {
+  const timeline = UTTS.map((u,i) => ({
+    utterance_id: i,
+    raw: u.raw,
+    anchor_ms: anchors[i] || null,
+    stutter_info: u.si
+  }));
+  const blob = new Blob([JSON.stringify(timeline, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'timeline_synced.json';
+  a.click();
+  showToast(`Exported ${UTTS.length} utterances!`);
+});
+
+// Add utterance button
+document.getElementById('addUttBtn').addEventListener('click', addUtterance);
+
+// Import
+document.getElementById('importBtn').addEventListener('click', () => document.getElementById('importInput').click());
+document.getElementById('importInput').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      anchors = {};
+      Object.keys(data).forEach(k => {
+        const idx = parseInt(k);
+        anchors[idx] = data[k];
+        const tsEl = document.getElementById('ts_'+idx);
+        if(tsEl) tsEl.textContent = fmtTime(data[k]);
+        const itemEl = document.querySelector(`.utt-item[data-idx="${idx}"]`);
+        if(itemEl) itemEl.classList.add('synced');
+      });
+      updateSyncCount();
+      if(waveData) renderWave();
+      showToast(`Imported ${Object.keys(anchors).length} anchors`);
+    } catch(err) { alert('Bad JSON: '+err.message); }
+  };
+  reader.readAsText(file);
+});
+
+// Utils
+function fmtTime(ms) {
+  if(!ms||ms<0) ms=0;
+  const s = Math.floor(ms/1000);
+  const m = Math.floor(s/60);
+  return `${String(m).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+}
+
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 1500);
+}
+
+// Init
+showUtterance(0);
+</script>
+</body>
+</html>
