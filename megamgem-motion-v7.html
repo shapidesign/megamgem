@@ -41,12 +41,17 @@
   .strip-wrap {
     position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%);
     height: 140px; overflow: hidden; z-index: 1;
-    /* Isolate timeline: physical time → right without inheriting document RTL. */
     direction: ltr;
     unicode-bidi: isolate;
   }
   .strip {
-    display: flex; align-items: center; gap: 28px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 28px;
     flex-direction: row;
     direction: ltr;
     unicode-bidi: isolate;
@@ -56,7 +61,8 @@
     font-size: clamp(36px, 4.8vw, 56px);
     font-weight: 300;
     line-height: 1.35; letter-spacing: -0.005em;
-    padding-inline: 42vw;
+    padding-inline: 50vw;
+    box-sizing: content-box;
   }
   .film-word {
     flex-shrink: 0;
@@ -4833,20 +4839,17 @@ function findActiveFilmWordIdx(t) {
 
 function centerFilmStripElement(el) {
   const strip = document.getElementById('filmStrip');
-  if (!strip || !el) return;
-  const wrap = strip.parentElement;
-  if (!wrap) return;
+  const stage = document.getElementById('stage');
+  if (!strip || !el || !stage) return;
+  strip.style.transition = 'none';
   strip.style.transform = 'none';
   void strip.offsetWidth;
-  const wrapRect = wrap.getBoundingClientRect();
+  const stageRect = stage.getBoundingClientRect();
+  const centerX = stageRect.left + stageRect.width / 2;
   const elRect = el.getBoundingClientRect();
-  const delta = wrapRect.left + wrapRect.width / 2 - (elRect.left + elRect.width / 2);
+  const elCenterX = elRect.left + elRect.width / 2;
+  const delta = centerX - elCenterX;
   strip.style.transform = `translateX(${delta}px)`;
-}
-
-function centerFilmStrip(activeIdx) {
-  if (!filmWordEls[activeIdx]) return;
-  centerFilmStripElement(filmWordEls[activeIdx]);
 }
 
 function highlightFilmWord(idx) {
@@ -5027,7 +5030,6 @@ function renderAtTime(t) {
     if (needRecenter) {
       highlightFilmWord(-1);
       gapNow.el.classList.add('active');
-      centerFilmStripElement(gapNow.el);
     }
     findActiveFilmWordIdx(t);
   } else {
@@ -5040,7 +5042,6 @@ function renderAtTime(t) {
     if (widx !== currentFilmWordIdx) {
       currentFilmWordIdx = widx;
       highlightFilmWord(widx);
-      centerFilmStrip(widx);
     }
   }
 
@@ -5125,6 +5126,13 @@ function renderAtTime(t) {
     stutterTag.style.opacity = 1;
   } else {
     stutterTag.style.opacity = 0;
+  }
+
+  /* After letter visibility / layout — keep active word or silence bar on stage center (matches film-strip.html). */
+  if (gapNow && gapNow.el) {
+    centerFilmStripElement(gapNow.el);
+  } else if (currentFilmWordIdx >= 0 && filmWordEls[currentFilmWordIdx]) {
+    centerFilmStripElement(filmWordEls[currentFilmWordIdx]);
   }
 
   timelineProgress.style.width = totalDuration > 0 ? (t / totalDuration * 100) + '%' : '0%';
