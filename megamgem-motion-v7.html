@@ -52,11 +52,11 @@
     display: flex;
     align-items: center;
     gap: 28px;
-    flex-direction: row;
+    /* DOM order = time order; reverse so first cue sits on the right and speech advances left (Hebrew reading). */
+    flex-direction: row-reverse;
     direction: ltr;
     unicode-bidi: isolate;
     white-space: nowrap; will-change: transform;
-    transition: transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
     font-family: var(--hebrew);
     font-size: clamp(36px, 4.8vw, 56px);
     font-weight: 300;
@@ -4717,6 +4717,8 @@ function rebuildFilmStrip() {
   currentFilmWordIdx = -1;
   inSilenceGap = false;
   currentGapEl = null;
+  strip.style.transform = '';
+  strip.style.transition = 'none';
 
   const uttStartAbs = (utt) => minAnchoredStartMs(utt);
 
@@ -4837,19 +4839,33 @@ function findActiveFilmWordIdx(t) {
   return 0;
 }
 
+function getStripTranslateX(strip) {
+  const st = strip.style.transform;
+  if (st && st !== 'none') {
+    const m = st.match(/translateX\(([-0-9.eE]+)px\)/);
+    if (m) return parseFloat(m[1], 10);
+  }
+  const cs = getComputedStyle(strip).transform;
+  if (!cs || cs === 'none') return 0;
+  const mm = cs.match(/matrix(?:3d)?\(([^)]+)\)/);
+  if (!mm) return 0;
+  const parts = mm[1].split(',').map((x) => parseFloat(x.trim(), 10));
+  return parts.length === 6 ? parts[4] : (parts.length === 16 ? parts[12] : 0);
+}
+
+/** Keep `el` geometrically under #stage horizontal center (film-strip style). */
 function centerFilmStripElement(el) {
   const strip = document.getElementById('filmStrip');
   const stage = document.getElementById('stage');
   if (!strip || !el || !stage) return;
   strip.style.transition = 'none';
-  strip.style.transform = 'none';
-  void strip.offsetWidth;
   const stageRect = stage.getBoundingClientRect();
   const centerX = stageRect.left + stageRect.width / 2;
   const elRect = el.getBoundingClientRect();
   const elCenterX = elRect.left + elRect.width / 2;
-  const delta = centerX - elCenterX;
-  strip.style.transform = `translateX(${delta}px)`;
+  const adjust = centerX - elCenterX;
+  const cur = getStripTranslateX(strip);
+  strip.style.transform = `translateX(${cur + adjust}px)`;
 }
 
 function highlightFilmWord(idx) {
