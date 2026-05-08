@@ -41,11 +41,15 @@
   .strip-wrap {
     position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%);
     height: 140px; overflow: hidden; z-index: 1;
+    /* Isolate timeline: physical time → right without inheriting document RTL. */
+    direction: ltr;
+    unicode-bidi: isolate;
   }
   .strip {
     display: flex; align-items: center; gap: 28px;
     flex-direction: row;
     direction: ltr;
+    unicode-bidi: isolate;
     white-space: nowrap; will-change: transform;
     transition: transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
     font-family: var(--hebrew);
@@ -58,6 +62,7 @@
     flex-shrink: 0;
     direction: rtl;
     unicode-bidi: isolate;
+    text-align: start;
     color: var(--paper-dim);
     opacity: 0.35;
     transition: color 0.28s, opacity 0.28s, transform 0.28s, font-weight 0.28s;
@@ -193,7 +198,7 @@
 
   <div class="stage" id="stage">
     <div class="center-line" aria-hidden="true"></div>
-    <div class="strip-wrap">
+    <div class="strip-wrap" dir="ltr" lang="he">
       <div class="strip" id="filmStrip" dir="ltr"></div>
     </div>
     <div class="stutter-tag" id="stutterTag"></div>
@@ -4731,6 +4736,8 @@ function rebuildFilmStrip() {
         const ev = utt.events[curEvIdx];
         curWordEl = document.createElement('span');
         curWordEl.className = 'film-word';
+        curWordEl.setAttribute('dir', 'rtl');
+        curWordEl.setAttribute('lang', 'he');
         if (ev.kind === 'ghost') curWordEl.classList.add('ghost');
         if (ev.kind === 'filler') curWordEl.classList.add('filler');
         if (ev.kind === 'rewind') curWordEl.classList.add('rewind');
