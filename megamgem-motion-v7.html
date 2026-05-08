@@ -71,7 +71,10 @@
     text-align: start;
     color: var(--paper-dim);
     opacity: 0.35;
-    transition: color 0.28s, opacity 0.28s, transform 0.28s, font-weight 0.28s;
+    transition: color 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.42s cubic-bezier(0.45, 0, 0.2, 1),
+      font-weight 0.32s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
   }
   .film-word.active {
@@ -126,9 +129,8 @@
     /* axis values set inline */
   }
   .letter.visible { opacity: 1; }
-  .letter.fading-prol {
-    /* applied while PROL is ramping */
-    transition: font-variation-settings 50ms linear;
+  .letter.prolong-axis {
+    will-change: font-variation-settings;
   }
   .word-unit.ghost .letter {
     color: var(--paper-dim);
@@ -4669,6 +4671,8 @@ let csvSilenceGaps = [];
 let currentFilmWordIdx = -1;
 let inSilenceGap = false;
 let currentGapEl = null;
+/** Smoothed horizontal pan (px); null after rebuild — re-synced from strip on first center call. */
+let filmStripPanSmoothed = null;
 /** Next marker time (ms) after each anchored event — typing fills until this instant. */
 let cueChainNextAbs = new Map();
 let cueSortedStarts = [];
@@ -4719,6 +4723,7 @@ function rebuildFilmStrip() {
   currentGapEl = null;
   strip.style.transform = '';
   strip.style.transition = 'none';
+  filmStripPanSmoothed = null;
 
   const uttStartAbs = (utt) => minAnchoredStartMs(utt);
 
@@ -4790,6 +4795,7 @@ function rebuildFilmStrip() {
       }
       span.textContent = s.char;
       span.style.fontVariationSettings = `"PROL" 0, "STTR" 0`;
+      if (s.animatesProl) span.classList.add('prolong-axis');
       curWordEl.appendChild(span);
       meta.letters.push({
         el: span,
@@ -4853,7 +4859,16 @@ function getStripTranslateX(strip) {
   return parts.length === 6 ? parts[4] : (parts.length === 16 ? parts[12] : 0);
 }
 
-/** Keep `el` geometrically under #stage horizontal center (film-strip style). */
+/** Smoothstep-style ease for PROL ramps (normal → elongated). */
+function easeInOutCubic(t) {
+  const x = Math.max(0, Math.min(1, t));
+  return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+}
+
+/**
+ * Keep `el` under #stage horizontal center. While playing, ease the strip (film-strip drift);
+ * when paused or scrubbing, snap so the frame matches the timeline.
+ */
 function centerFilmStripElement(el) {
   const strip = document.getElementById('filmStrip');
   const stage = document.getElementById('stage');
@@ -4861,11 +4876,22 @@ function centerFilmStripElement(el) {
   strip.style.transition = 'none';
   const stageRect = stage.getBoundingClientRect();
   const centerX = stageRect.left + stageRect.width / 2;
+  const instant = !playing;
+  if (filmStripPanSmoothed == null) filmStripPanSmoothed = getStripTranslateX(strip);
+  strip.style.transform = `translateX(${filmStripPanSmoothed}px)`;
   const elRect = el.getBoundingClientRect();
   const elCenterX = elRect.left + elRect.width / 2;
   const adjust = centerX - elCenterX;
-  const cur = getStripTranslateX(strip);
-  strip.style.transform = `translateX(${cur + adjust}px)`;
+  const target = filmStripPanSmoothed + adjust;
+  if (instant) {
+    filmStripPanSmoothed = target;
+  } else {
+    const err = Math.abs(adjust);
+    /* Ease-in-out feel: gentle when nearly centered, stronger when a new word jumps layout */
+    const alpha = Math.min(0.72, 0.1 + err * 0.0014);
+    filmStripPanSmoothed += (target - filmStripPanSmoothed) * alpha;
+  }
+  strip.style.transform = `translateX(${filmStripPanSmoothed}px)`;
 }
 
 function highlightFilmWord(idx) {
@@ -5079,7 +5105,7 @@ function renderAtTime(t) {
           let prol = 0;
           if (sinceAppear <= 0) prol = 0;
           else if (sinceAppear >= rampDur) prol = 1000;
-          else prol = (sinceAppear / rampDur) * 1000;
+          else prol = easeInOutCubic(sinceAppear / rampDur) * 1000;
           el.style.fontVariationSettings = `"PROL" ${Math.round(prol)}, "STTR" 0`;
         } else {
           el.style.fontVariationSettings = `"PROL" ${s.prol}, "STTR" ${s.sttr}`;
