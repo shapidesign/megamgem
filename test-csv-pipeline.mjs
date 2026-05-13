@@ -1,6 +1,6 @@
 // v7 CSV pipeline test harness.
 // Mirrors the parser/classifier/aligner logic embedded in megamgem-motion-v7.html
-// and runs it against Markers01.csv + timeline_v2.json so we can verify the
+// and runs it against Markers2.csv + timeline_v2.json so we can verify the
 // critical rule-3 / rule-4 cases without needing a browser.
 
 import fs from 'node:fs';
@@ -182,7 +182,7 @@ function buildEventsFromTokens(tokens) {
 
 // ---- run --------------------------------------------------------------------
 
-const csvText = fs.readFileSync(path.join(__dirname, 'Markers01.csv'), 'utf8');
+const csvText = fs.readFileSync(path.join(__dirname, 'Markers2.csv'), 'utf8');
 const v2 = JSON.parse(fs.readFileSync(path.join(__dirname, 'timeline_v2.json'), 'utf8'));
 
 const { tokens, silences } = parseAuditionCSV(csvText);

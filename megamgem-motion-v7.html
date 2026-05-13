@@ -4170,7 +4170,7 @@ function alignToTranscript(events, timelineV2) {
 
   // Only treat as "next bucket" when CSV matches the *first* v2 event of that
   // bucket — not any of the first 3 words (that caused short cues like אה to
-  // close the bucket early and lose sync with Markers01.csv).
+  // close the bucket early and lose sync with Markers2.csv).
   function csvTargetsNextBucketFirstWord(csvTarget, nextBucketIdx) {
     if (nextBucketIdx >= timelineV2.length) return false;
     const nextUtt = timelineV2[nextBucketIdx];
@@ -5341,7 +5341,7 @@ function tryLoadBundledAudio() {
 async function bootBundledCsvThenPlayer() {
   let csvOk = false;
   try {
-    const r = await fetch('Markers01.csv');
+    const r = await fetch('Markers2.csv');
     if (!r.ok) throw new Error(String(r.status));
     const result = importAuditionCSV(await r.text());
     applyCSVTimeline(result.timeline, {
@@ -5352,8 +5352,8 @@ async function bootBundledCsvThenPlayer() {
     });
     csvOk = true;
   } catch (err) {
-    console.warn('Bundled Markers01.csv:', err);
-    setCSVStatus('Import Markers01.csv manually (fetch blocked or file missing)');
+    console.warn('Bundled Markers2.csv:', err);
+    setCSVStatus('Import Markers2.csv manually (fetch blocked or file missing)');
   }
   // Never paint the v2-only strip first (it drops Audition-only cues like אה---ה and silences);
   // only fall back to inline transcript timing if CSV is unavailable.
