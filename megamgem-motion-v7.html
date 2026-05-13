@@ -22,10 +22,48 @@
   header {
     padding: 16px 28px; border-bottom: 1px solid var(--paper-faint);
     display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
     font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
     color: var(--paper-dim); direction: ltr;
   }
-  header .right { font-variant-numeric: tabular-nums; }
+  header .mid {
+    flex: 1 1 220px;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    text-transform: none; letter-spacing: 0.04em;
+  }
+  header .csv-status {
+    font-size: 10px; color: var(--rust); text-align: center; line-height: 1.35;
+    max-width: 360px;
+  }
+  header .csv-status.ok { color: var(--paper-dim); }
+  header .csv-file-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+    opacity: 0;
+  }
+  header .csv-file-label {
+    cursor: pointer;
+    border: 1px solid var(--paper-faint);
+    padding: 5px 12px;
+    border-radius: 2px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+    transition: border-color 150ms ease, color 150ms ease;
+  }
+  header .csv-file-label:hover {
+    color: var(--paper);
+    border-color: var(--paper-dim);
+  }
+  header .right { font-variant-numeric: tabular-nums; margin-inline-start: auto; }
   header b { color: var(--paper); font-weight: 500; }
 
   .stage {
@@ -207,6 +245,13 @@
 <div class="app">
   <header>
     <div class="left">נקמת הילד הגמגם</div>
+    <div class="mid">
+      <span id="csvStatus" class="csv-status ok" role="status"></span>
+      <label class="csv-file-label">
+        <input type="file" id="csvInput" class="csv-file-input" accept=".csv,text/csv,text/plain,text/tab-separated-values">
+        טען Markers2.csv
+      </label>
+    </div>
     <div class="right" id="elapsed">00:00 / 00:00</div>
   </header>
 
@@ -3840,12 +3885,26 @@
 // On boot it holds the v6 data parsed from the inline JSON; after CSV import
 // it gets swapped for the regenerated per-word timeline.
 const TIMELINE_V2 = JSON.parse(document.getElementById('timelineData').textContent);
-let TIMELINE = TIMELINE_V2.map(u => ({
-  utterance_id: u.utterance_id,
-  raw: u.raw,
-  events: u.events.map(e => ({ ...e, stutters: (e.stutters || []).slice() })),
-}));
+function cloneTimelineFromV2() {
+  return TIMELINE_V2.map(u => ({
+    utterance_id: u.utterance_id,
+    raw: u.raw,
+    events: u.events.map(e => ({ ...e, stutters: (e.stutters || []).slice() })),
+  }));
+}
+let TIMELINE = cloneTimelineFromV2();
 let TIMELINE_SOURCE = 'v2'; // 'v2' = inline transcript, 'csv' = Audition-derived
+
+function timelineHasAnchoredMs(tl) {
+  for (let ui = 0; ui < tl.length; ui++) {
+    const evs = tl[ui].events || [];
+    for (let j = 0; j < evs.length; j++) {
+      const ms = evs[j].startMs;
+      if (ms != null && !Number.isNaN(ms)) return true;
+    }
+  }
+  return false;
+}
 
 /** Earliest anchored cue in an utterance (CSV absolute time). */
 function minAnchoredStartMs(utt) {
@@ -3907,12 +3966,19 @@ function parseAuditionTime(str) {
   return null;
 }
 
+function splitMarkerRow(line) {
+  const t = line.split('\t');
+  if (t.length >= 2) return t;
+  return line.split(',').map((c) => c.trim());
+}
+
 function parseAuditionCSV(text) {
-  const lines = text.split(/\r?\n/).filter(l => l.length > 0);
+  text = String(text || '').replace(/^\uFEFF/, '');
+  const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0);
   if (lines.length === 0) return { tokens: [], silences: [] };
 
-  // Audition exports tab-separated. First line is header.
-  const headerCells = lines[0].split('\t');
+  // Audition exports tab-separated (sometimes comma-separated after Excel).
+  const headerCells = splitMarkerRow(lines[0]);
   let nameIdx = headerCells.findIndex(h => /^name$/i.test(h.trim()));
   let startIdx = headerCells.findIndex(h => /^start$/i.test(h.trim()));
   if (nameIdx < 0) nameIdx = 0;
@@ -3920,7 +3986,7 @@ function parseAuditionCSV(text) {
 
   const rawRows = [];
   for (let i = 1; i < lines.length; i++) {
-    const cells = lines[i].split('\t');
+    const cells = splitMarkerRow(lines[i]);
     const name = (cells[nameIdx] || '').trim();
     const start = (cells[startIdx] || '').trim();
     if (!name || !start) continue;
@@ -4141,7 +4207,7 @@ function normalizeWord(s) {
   // final-form letters (ם ן ך ף ץ) to their non-final equivalents so words
   // like בן and בנאדם can prefix-match.
   return s
-    .replace(/[\.,!?:;'"\u05F3\u05F4()]/g, '')
+    .replace(/[\.,!?:;?'"\u05F3\u05F4()\u061F]/g, '')
     .replace(/\u05DA/g, '\u05DB')   // ך → כ
     .replace(/\u05DD/g, '\u05DE')   // ם → מ
     .replace(/\u05DF/g, '\u05E0')   // ן → נ
@@ -5049,13 +5115,18 @@ function rebuildTiming() {
   rebuildFilmStrip();
 }
 function paintMarkers() {
-  if (!totalDuration) return;
+  let dur = totalDuration;
+  if (!(dur > 0)) {
+    if (cueSortedStarts.length) dur = cueSortedStarts[cueSortedStarts.length - 1] + 800;
+    else if (utteranceStarts.length) dur = utteranceStarts[utteranceStarts.length - 1] + 800;
+  }
+  if (!(dur > 0)) return;
   timelineEvents.innerHTML = '';
   if (TIMELINE_SOURCE === 'csv' && cueSortedStarts.length) {
     cueSortedStarts.forEach((t) => {
       const m = document.createElement('div');
       m.className = 'marker';
-      m.style.left = (t / totalDuration * 100) + '%';
+      m.style.left = (t / dur * 100) + '%';
       timelineEvents.appendChild(m);
     });
     return;
@@ -5063,7 +5134,7 @@ function paintMarkers() {
   utteranceStarts.forEach((t) => {
     const m = document.createElement('div');
     m.className = 'marker';
-    m.style.left = (t / totalDuration * 100) + '%';
+    m.style.left = (t / dur * 100) + '%';
     timelineEvents.appendChild(m);
   });
 }
@@ -5293,9 +5364,56 @@ document.addEventListener('keydown', (e) => {
 });
 
 /* v7: Audition CSV import — parse, classify, align, install. */
-function setCSVStatus(msg) {
+function setCSVStatus(msg, ok) {
   const el = document.getElementById('csvStatus');
-  if (el) el.textContent = msg || '';
+  if (!el) return;
+  el.textContent = msg || '';
+  el.classList.toggle('ok', !!ok || !msg);
+}
+
+function ingestMarkersCsv(csvText, opts) {
+  const text = String(csvText || '').replace(/^\uFEFF/, '');
+  const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0);
+  if (lines.length < 2) {
+    setCSVStatus('קובץ ה־CSV ריק או לא נקרא.', false);
+    return false;
+  }
+  const hdr = splitMarkerRow(lines[0]).join('\t').toLowerCase();
+  if (!/\bname\b/.test(hdr) || !/\bstart\b/.test(hdr)) {
+    setCSVStatus('כותרת לא מזוהה: צפוי ייצוא Audition עם עמודות Name ו־Start.', false);
+    return false;
+  }
+
+  let result;
+  try {
+    result = importAuditionCSV(text);
+  } catch (err) {
+    console.warn('importAuditionCSV:', err);
+    setCSVStatus('שגיאה בעיבוד ה־CSV.', false);
+    return false;
+  }
+
+  if (!result.tokens.length || !timelineHasAnchoredMs(result.timeline)) {
+    TIMELINE = cloneTimelineFromV2();
+    TIMELINE_SOURCE = 'v2';
+    csvSilenceGaps = [];
+    currentFilmWordIdx = -1;
+    rebuildTiming();
+    renderAtTime(getCurrentTime());
+    setCSVStatus('לא נקראו זמני סימון מהקובץ (טאבים/UTF-8?). נטען תמליל מובנה.', false);
+    return false;
+  }
+
+  applyCSVTimeline(result.timeline, {
+    tokens: result.tokens.length,
+    events: result.events.length,
+    silences: result.silences || [],
+    autoLoaded: !!(opts && opts.autoLoaded),
+  });
+
+  const hint = opts && opts.manual ? 'נטען מהמחשב · ' : '';
+  setCSVStatus(`${hint}${result.tokens.length} סימוני זמן · Markers2.csv`, true);
+  return true;
 }
 
 function applyCSVTimeline(timelineV3, info) {
@@ -5340,28 +5458,46 @@ function tryLoadBundledAudio() {
 
 async function bootBundledCsvThenPlayer() {
   let csvOk = false;
+  let csvText = '';
   try {
-    const r = await fetch('Markers2.csv');
+    const url = new URL('Markers2.csv', window.location.href).href;
+    const r = await fetch(url);
     if (!r.ok) throw new Error(String(r.status));
-    const result = importAuditionCSV(await r.text());
-    applyCSVTimeline(result.timeline, {
-      tokens: result.tokens.length,
-      events: result.events.length,
-      silences: result.silences || [],
-      autoLoaded: true,
-    });
-    csvOk = true;
+    csvText = await r.text();
   } catch (err) {
-    console.warn('Bundled Markers2.csv:', err);
-    setCSVStatus('Import Markers2.csv manually (fetch blocked or file missing)');
+    console.warn('Markers2.csv fetch:', err);
+    const localHint = window.location.protocol === 'file:'
+      ? 'דפדפן חוסם טעינת קובץ מקומי. הרץ שרת (python3 -m http.server) או לחץ ״טען Markers2.csv״.'
+      : 'לא ניתן למשוך את Markers2.csv מהשרת — לחץ ״טען Markers2.csv״.';
+    setCSVStatus(localHint, false);
   }
-  // Never paint the v2-only strip first (it drops Audition-only cues like אה---ה and silences);
-  // only fall back to inline transcript timing if CSV is unavailable.
+
+  if (csvText) {
+    csvOk = ingestMarkersCsv(csvText, { autoLoaded: true });
+  }
+
+  // Never paint the v2-only strip first when CSV failed auto-load (fetch/file://):
+  // rebuild so inline transcript timing drives the strip until CSV loads.
   if (!csvOk) {
     rebuildTiming();
     renderAtTime(0);
   }
   tryLoadBundledAudio();
+}
+
+const csvInputEl = document.getElementById('csvInput');
+if (csvInputEl) {
+  csvInputEl.addEventListener('change', () => {
+    const f = csvInputEl.files && csvInputEl.files[0];
+    if (!f) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      ingestMarkersCsv(String(reader.result || ''), { manual: true });
+      csvInputEl.value = '';
+    };
+    reader.onerror = () => setCSVStatus('קריאת הקובץ נכשלה.', false);
+    reader.readAsText(f, 'UTF-8');
+  });
 }
 
 loadAnchors();
